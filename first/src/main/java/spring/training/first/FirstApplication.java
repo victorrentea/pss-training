@@ -4,6 +4,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
@@ -107,6 +109,11 @@ class Person {
 	public Person(String name) {
 		this.name = name;
 	}
+	
+	@PostConstruct
+	public void nastere() {
+		System.out.println("Uaaaa!");
+	}
 	public String getName() {
 		return name;
 	}
@@ -151,6 +158,19 @@ class DacaEra {
 	
 	@Autowired
 	private DeMana deMana;
+	
+	public DacaEra() {
+		System.out.println("ce puii mei e asta!?! : " + deMana);
+	}
+	
+	@PostConstruct
+	public void cePotSaFacInPostConstruct() {
+		//poti folosi dependentele injectate pe campuri
+		System.out.println("Sunt injectat: " + deMana);
+		// incarc din baza config
+		// apelez un serviciu web "am pornit"
+		// chestii de facut la start-up-ul aplicatiei.
+	}
 }
 
 
