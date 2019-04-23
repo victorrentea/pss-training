@@ -1,5 +1,9 @@
 package spring.training.strategy;
 
+import static java.util.Arrays.asList;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -43,36 +47,58 @@ class CustomsService {
 	private CHTaxComputer ch;
 	
 	public double computeCustomsTax(String originCountry, double tobacoValue, double regularValue) { // UGLY API we CANNOT change
-		switch (originCountry) { 
-		case "UK": return uk.computeUKTax(tobacoValue, regularValue); 
-		case "CH": return ch.computeCHTax(tobacoValue, regularValue);
-		case "FR": 
-		case "ES": // other EU country codes...
-		case "RO": return eu.computeEUTax(tobacoValue);
-		default: throw new IllegalArgumentException("Not a valid country ISO2 code: " + originCountry);
-		} 
+		TaxComputer pece = getTaxComputer(originCountry);
+		return pece.compute(tobacoValue, regularValue);
 	}
+
+	private TaxComputer getTaxComputer(String originCountry) {
+		List<TaxComputer> computers = asList(uk,ch,eu);
+		for (TaxComputer taxComputer : computers) {
+			if (taxComputer.accepts(originCountry)) {
+				return taxComputer;
+			}
+		}
+		throw new IllegalArgumentException(originCountry);
+	}
+}
+
+
+interface TaxComputer {
+	double compute(double tobacoValue, double regularValue);
+	boolean accepts(String originCountry);
 }
 @Service
 class W{ }
+
 @Service
-class EUTaxComputer {
+class EUTaxComputer implements TaxComputer{
 	@Autowired
 	private W w;
-	public double computeEUTax(double tobacoValue) {
+	public double compute(double tobacoValue, double regularValue) {
 		System.out.println("w: " + w);
 		return tobacoValue/3;
 	}
-}
-@Service
-class CHTaxComputer {
-	public double computeCHTax(double tobacoValue, double regularValue) {
-		return tobacoValue + regularValue;
+	public boolean accepts(String originCountry) {
+		return asList("RO","ES","FR").contains(originCountry);
 	}
 }
 @Service
-class UKTaxComputer {
-	public double computeUKTax(double tobacoValue, double regularValue) {
+class CHTaxComputer  implements TaxComputer{
+	public double compute(double tobacoValue, double regularValue) {
+		return tobacoValue + regularValue;
+	}
+
+	public boolean accepts(String originCountry) {
+		return "CH".equals(originCountry); 
+	}
+}
+@Service
+class UKTaxComputer implements TaxComputer {
+	public double compute(double tobacoValue, double regularValue) {
 		return tobacoValue/2 + regularValue/2;
+	}
+
+	public boolean accepts(String originCountry) {
+		return "UK".equals(originCountry);
 	}
 }
