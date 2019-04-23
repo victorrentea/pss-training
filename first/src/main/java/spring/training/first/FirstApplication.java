@@ -1,5 +1,7 @@
 package spring.training.first;
 
+import java.lang.reflect.Field;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -25,14 +27,21 @@ class A implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		System.out.println("Hello Spring Boot!");
 		b.bye();
+		
 	}
 }
 @Component
 class B {
-	@Autowired
 	private C c;
 	@Autowired
 	private D d;
+	
+	
+	@Autowired
+	public void setC(C c) {
+		this.c = c;
+	}
+	
 //	public B(C c, D d) {
 //		this.c = c;
 //		this.d = d;
