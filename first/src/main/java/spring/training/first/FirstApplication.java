@@ -33,19 +33,13 @@ class A implements CommandLineRunner {
 @Component
 class B {
 	private C c;
-	@Autowired
 	private D d;
-	
-	
-	@Autowired
-	public void setC(C c) {
+	// Daca Spring vede o clasa @Component/Service care are un singur constructor 
+	// va incerca automat sa apeleze acel constructor cu bean-uri compatibile din "galeata"
+	public B(C c, D d) {
 		this.c = c;
+		this.d = d;
 	}
-	
-//	public B(C c, D d) {
-//		this.c = c;
-//		this.d = d;
-//	}
 	public void bye() {
 		System.out.println("Bye Spring Boot!");
 	}
