@@ -48,13 +48,16 @@ class A {
 	@Value("${webservice.endpoint}")
 	private String url;
 	
+	@Value("${webservice.timeout:5000}")
+	private long timeout;
+	
 	@Autowired
 	private ApplicationContext spring;
 	
 	@PostConstruct
 	public void init() {
 		String url = spring.getEnvironment().getProperty("webservice.endpointXX");
-		System.out.println("Lucrez cu URL: " + url);
+		System.out.println("Lucrez cu URL: " + url + " si timeout: " + timeout);
 	}
 	public void callWS() {
 		 System.out.println("Apelez endpointul " + url);
