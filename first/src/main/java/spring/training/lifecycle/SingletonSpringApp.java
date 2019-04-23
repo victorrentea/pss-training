@@ -50,29 +50,32 @@ class OrderExporter  {
 	private final static Logger log = LoggerFactory.getLogger(OrderExporter.class);
 	@Autowired
 	private InvoiceExporter invoiceExporter;
+//	@Autowired
+//	private LabelService labelService;
 	@Autowired
-	private LabelService labelService;
+	private CountryRepo countryRepo;
 
 	public void export(Locale locale) {
+		LabelService labelService = new LabelService(countryRepo);
 		labelService.load(locale);
 		log.debug("Running export in " + locale);
 		log.debug("Origin Country: " + labelService.getCountryName("rO")); 
-		invoiceExporter.exportInvoice();
+		invoiceExporter.exportInvoice(labelService);
 	}
 }
 
 @Service 
 class InvoiceExporter {
 	private final static Logger log = LoggerFactory.getLogger(InvoiceExporter.class);
-	@Autowired
-	private LabelService labelService;
+//	@Autowired
+//	private LabelService labelService;
 	
-	public void exportInvoice() {
+	public void exportInvoice(LabelService labelService) {
 		log.debug("Invoice Country: " + labelService.getCountryName("ES"));
 	}
 }
 
-@Service
+//@Service
 class LabelService {
 	private final static Logger log = LoggerFactory.getLogger(LabelService.class);
 	private CountryRepo countryRepo;
