@@ -105,10 +105,16 @@ class B {
 	private DacaEra d;
 	// Daca Spring vede o clasa @Component/Service care are un singur constructor 
 	// va incerca automat sa apeleze acel constructor cu bean-uri compatibile din "galeata"
+ 	@Autowired // AUtowired poate selecta dintre 2 constructori cu parametrii pe acela pe care-l veau invocat
 	public B(C c, DacaEra d) {
 		this.c = c;
 		this.d = d;
 	}
+	
+	public B(C c) {
+		this.c = c;
+	}
+
 	public void bye() {
 		System.out.println("Bye Spring Boot!");
 	}
