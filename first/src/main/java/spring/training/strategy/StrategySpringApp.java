@@ -18,6 +18,8 @@ public class StrategySpringApp implements CommandLineRunner {
 			.run(args);
 	}
 
+	@Autowired
+	private Baza baza;
 	
 	@Autowired
 	private ConfigProvider configProvider; 
@@ -32,7 +34,7 @@ public class StrategySpringApp implements CommandLineRunner {
 		System.out.println("Tax for (RO,100,100) = " + service.computeCustomsTax("RO", 100, 100));
 		System.out.println("Tax for (CH,100,100) = " + service.computeCustomsTax("CH", 100, 100));
 		System.out.println("Tax for (UK,100,100) = " + service.computeCustomsTax("UK", 100, 100));
-		
+		System.out.println("Ce baza imi dai ?" + baza);
 		System.out.println("Property: " + configProvider.getProperties().getProperty("someProp"));
 	}
 }
