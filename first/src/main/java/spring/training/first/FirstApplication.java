@@ -1,13 +1,49 @@
 package spring.training.first;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.stereotype.Component;
 
 @SpringBootApplication
 public class FirstApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(FirstApplication.class, args);
 	}
-
 }
+
+@Component
+//@Service
+//@Repository
+//@Controller
+//@RestController
+class A implements CommandLineRunner {
+	@Autowired
+	private B b;
+	
+	public void run(String... args) throws Exception {
+		System.out.println("Hello Spring Boot!");
+		b.bye();
+	}
+}
+@Component
+class B {
+	@Autowired
+	private C c;
+	@Autowired
+	private D d;
+//	public B(C c, D d) {
+//		this.c = c;
+//		this.d = d;
+//	}
+	public void bye() {
+		System.out.println("Bye Spring Boot!");
+	}
+}
+
+@Component
+class C {}
+@Component
+class D {}
+
