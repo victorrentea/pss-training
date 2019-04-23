@@ -5,8 +5,8 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Lookup;
 import org.springframework.beans.factory.config.CustomScopeConfigurer;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -14,6 +14,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.context.support.SimpleThreadScope;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +24,7 @@ public class SingletonSpringApp implements CommandLineRunner{
 	@Bean
 	public static CustomScopeConfigurer defineThreadScope() {
 		CustomScopeConfigurer configurer = new CustomScopeConfigurer();
-		configurer.addScope("thread", new SimpleThreadScope()); // WARNING: Leaks memory. Prefer 'request' scope or read here: https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/context/support/SimpleThreadScope.html 
+		configurer.addScope("thread", new SimpleThreadScope()); // WARNING: Leaks memory. Prefer 'request' scope or read here: https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/context/support/SimpleThreadScope.html
 		return configurer;
 	}
 	
@@ -46,37 +47,36 @@ public class SingletonSpringApp implements CommandLineRunner{
 }
 
 @Service
-abstract class OrderExporter  {
+class OrderExporter  {
 	private final static Logger log = LoggerFactory.getLogger(OrderExporter.class);
 	@Autowired
 	private InvoiceExporter invoiceExporter;
-//	@Autowired
-//	private ObjectFactory<LabelService> labelServiceFactory;
-	@Lookup
-	protected abstract LabelService getLabelService();
+	@Autowired
+	private LabelService labelService;
 
 	public void export(Locale locale) {
-		LabelService labelService = getLabelService();
+		System.out.println("hash-ul instantei "  +labelService.hashCode());
+		System.out.println("Oare cu cine vorbesc??! " + labelService.getClass());
 		labelService.load(locale);
 		log.debug("Running export in " + locale);
 		log.debug("Origin Country: " + labelService.getCountryName("rO")); 
-		invoiceExporter.exportInvoice(labelService);
+		invoiceExporter.exportInvoice();
 	}
 }
 
 @Service 
 class InvoiceExporter {
 	private final static Logger log = LoggerFactory.getLogger(InvoiceExporter.class);
-//	@Autowired
-//	private LabelService labelService;
+	@Autowired
+	private LabelService labelService;
 	
-	public void exportInvoice(LabelService labelService) {
+	public void exportInvoice() {
 		log.debug("Invoice Country: " + labelService.getCountryName("ES"));
 	}
 }
 
 @Service
-@Scope("prototype")
+@Scope(value = "thread", proxyMode = ScopedProxyMode.TARGET_CLASS)
 class LabelService {
 	private final static Logger log = LoggerFactory.getLogger(LabelService.class);
 	private CountryRepo countryRepo;
@@ -89,6 +89,7 @@ class LabelService {
 	private Map<String, String> countryNames;
 	
 	public void load(Locale locale) {
+		log.debug("Incarc pe instanta de LabelService: " + this.hashCode());
 		countryNames = countryRepo.loadCountryNamesAsMap(locale);
 	}
 	
