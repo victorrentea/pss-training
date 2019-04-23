@@ -135,14 +135,15 @@ class B {
 		this.c = c;
 		this.d = d;
 	}
+ 	public B(C c) {
+ 		this.c = c;
+ 	}
+
  	@Autowired
 	public void nuoface(C c, DacaEra d) {
  		System.out.println("Pentru ca e mai bine cu @PostConstruct: " + c + d);
  	}
 	
-	public B(C c) {
-		this.c = c;
-	}
 
 	public void bye() {
 		System.out.println("Bye Spring Boot!");
