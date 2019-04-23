@@ -1,5 +1,13 @@
 package spring.training.proxy;
 
+import java.io.File;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.util.Arrays;
+
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -51,9 +59,9 @@ class Runner implements CommandLineRunner {
 	// Holy Domain Logic. 
 	// Very precious things that I want to keep agnostic to technical details
 	@Autowired
-	private IExpensiveOps ops;
+	private ExpensiveOps ops;
 	public void run(String... args) throws Exception {
-		
+		System.out.println("Cine esti? " + ops.getClass());
 		log.debug("\n");
  		log.debug("---- CPU Intensive ~ memoization?");
 		log.debug("10000169 is prime ? ");
@@ -61,10 +69,43 @@ class Runner implements CommandLineRunner {
 		log.debug("10000169 is prime ? ");
 		log.debug("Got: " + ops.isPrime(10000169) + "\n");
 		
-//		log.debug("---- I/O Intensive ~ \"There are only two things hard in programming...\"");
-//		log.debug("Folder . MD5: ");
-//		log.debug("Got: " + ops.hashAllFiles(new File(".")) + "\n");
-//		log.debug("Folder . MD5: ");
-//		log.debug("Got: " + ops.hashAllFiles(new File(".")) + "\n");
+		log.debug("---- I/O Intensive ~ \"There are only two things hard in programming...\"");
+		log.debug("Folder . MD5: ");
+		log.debug("Got: " + ops.hashAllFiles(new File(".")) + "\n");
+		log.debug("Got: " + ops.hashAllFiles(new File(".")) + "\n");
+		
+		// Suppose I detect a change in a folder
+		log.debug("I must throw away the cache for folder .");
+		ops.aruncaCacheulPentruFolderul(new File("."));
+		
+		log.debug("Folder . MD5: ");
+		log.debug("Got: " + ops.hashAllFiles(new File(".")) + "\n");
 	}
+}
+
+@Retention(RetentionPolicy.RUNTIME)
+@interface LoggedClass {
+	
+}
+@Retention(RetentionPolicy.RUNTIME)
+@interface LoggedMethod {
+	
+}
+
+@Aspect
+@Component
+class MethodParamLogger {
+	private final static Logger log = LoggerFactory.getLogger(MethodParamLogger.class);
+//	@Around("execution(* spring..*.*(..))")
+//	@Around("execution(* spring.training.proxy.ExpensiveOps.*(..))")
+//	@Around("execution(* spring.training.proxy.*.*(..))")
+//	@Around("execution(* *(..)) && @within(spring.training.proxy.LoggedClass)")
+	@Around("execution(* *(..)) && @annotation(spring.training.proxy.LoggedMethod)")
+	public Object xx(ProceedingJoinPoint point) throws Throwable {
+		log.debug("Invoc metoda {} cu parametrii {}", 
+				point.getSignature().getName(),
+				Arrays.toString(point.getArgs()));
+		return point.proceed();
+	}
+	
 }

@@ -14,16 +14,24 @@ import org.apache.commons.io.FileUtils;
 import org.jooq.lambda.Unchecked;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ExpensiveOps implements IExpensiveOps {
+@LoggedClass
+public class ExpensiveOps {
 	private final static Logger log = LoggerFactory.getLogger(ExpensiveOps.class);
 	
 	private static final BigDecimal TWO = new BigDecimal("2");
 	
+	@LoggedMethod
+	@Cacheable("primes")
 	public Boolean isPrime(int n) {
 		log.debug("Computing isPrime({})", n);
+		
+		new RuntimeException().printStackTrace(System.out);
+		
 		BigDecimal number = new BigDecimal(n);
 		if (number.compareTo(TWO) <= 0) {
 			return true;
@@ -40,6 +48,8 @@ public class ExpensiveOps implements IExpensiveOps {
 		}
 		return true;
 	}
+	
+	@Cacheable("folders")
 	public String hashAllFiles(File folder) {
 		log.debug("Computing hashAllFiles({})", folder);
 		try {
@@ -57,9 +67,10 @@ public class ExpensiveOps implements IExpensiveOps {
 			throw new RuntimeException(e);
 		}
 	}
-//	@CacheEvict("folders")
-	public void invalidateCacheForFolder(File file) {
-		 // Do not touch; Let the magic happen!!..
-	}
 
+	@CacheEvict("folders")
+	public void aruncaCacheulPentruFolderul(File folder) {
+		 // Let the magic happen
+		System.out.println("Degeaba");
+	}
 }
