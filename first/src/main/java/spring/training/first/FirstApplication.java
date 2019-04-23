@@ -57,6 +57,8 @@ class A implements CommandLineRunner {
 		//by default, numele oricarui @Component/... adaugat 
 		// automat este lower-CamelCase al numelui clasei
 		System.out.println(spring.getBean("dacaEra"));
+		
+		System.out.println("CopilUL: " + person);
 	}
 }
 
@@ -68,6 +70,10 @@ class Person {
 	public String getName() {
 		return name;
 	}
+	public String toString() {
+		return "Person [name=" + name + "]";
+	}
+	
 }
 
 
