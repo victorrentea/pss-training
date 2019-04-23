@@ -24,6 +24,7 @@ public class FirstApplication {
 		return new Person("Emma");
 	}
 	@Bean
+	@Mezinul
 	public Person vlad() {
 		return new Person("Vlad");
 	}
@@ -44,6 +45,11 @@ public class FirstApplication {
 	}
 }
 
+@Qualifier
+@Retention(RetentionPolicy.RUNTIME)
+@interface Mezinul {}
+
+
 @Retention(RetentionPolicy.RUNTIME)
 @Component
 @interface Facade {}
@@ -61,7 +67,8 @@ class A implements CommandLineRunner {
 	private ApplicationContext spring;
 	
 	@Autowired
-	@Qualifier("vlad")
+	@Mezinul
+//	@Qualifier("vlad")
 	private Person person;
 	
 	@Autowired
@@ -121,6 +128,10 @@ class B {
 		this.c = c;
 		this.d = d;
 	}
+ 	@Autowired
+	public void nuoface(C c, DacaEra d) {
+ 		System.out.println("Pentru ca e mai bine cu @PostConstruct: " + c + d);
+ 	}
 	
 	public B(C c) {
 		this.c = c;
