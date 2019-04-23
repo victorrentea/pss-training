@@ -28,6 +28,17 @@ public class FirstApplication {
 		return new Person("Vlad");
 	}
 	
+	@Bean
+	public ClasaPeCareNuOPotiModifica p() { // NU UMBLAM la numele de metode @Bean
+		// dintro metoda @Bean poti creea orice clasa iti tuna. chiar daca nu ii controlezi codul.
+		return new ClasaPeCareNuOPotiModifica("p");
+	}
+	
+	@Bean
+	public DeMana r() {
+		return DeMana.getInstance();
+	}
+	
 	public static void main(String[] args) {
 		SpringApplication.run(FirstApplication.class, args);
 	}
@@ -123,5 +134,32 @@ class B {
 @Component
 class C {}
 @Component
-class DacaEra {}
+class DacaEra {
+	@Autowired
+	private ClasaPeCareNuOPotiModifica c;
+	
+	@Autowired
+	private DeMana deMana;
+}
 
+
+class ClasaPeCareNuOPotiModifica { // nu am voie sa o ating
+	private String param;
+
+	public ClasaPeCareNuOPotiModifica(String param) {
+		this.param = param;
+	}
+}
+
+
+class DeMana {
+	private static DeMana INSTANCE;
+	private DeMana() {
+	}
+	public static DeMana getInstance() {
+		if (INSTANCE == null) {
+			INSTANCE = new DeMana();
+		}
+		return INSTANCE;
+	}
+}
