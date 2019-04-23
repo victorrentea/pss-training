@@ -34,14 +34,14 @@ public class SingletonSpringApp implements CommandLineRunner{
 	@Autowired 
 	private OrderExporter exporter;
 	
-	// TODO [1] make singleton; test multi-thread: state is [ | | | ]
+	// TODO [1] make singleton; test multi-thread: state is [e|v|i|l]
 	// TODO [2] instantiate manually, set dependencies, pass around; no AOP
 	// TODO [3] prototype scope + ObjectFactory or @Lookup. Did you said "Factory"? ...
 	// TODO [4] thread/request scope. HOW it works?! Leaks: @see SimpleThreadScope javadoc
 	// TODO [5] (after AOP): RequestContext, @Cacheable. on thread?! @ThreadLocal
 	public void run(String... args) throws Exception {
-		exporter.export(Locale.ENGLISH);
-		exporter.export(Locale.FRENCH);
+		new Thread(() -> exporter.export(Locale.ENGLISH)).start();
+		new Thread(() -> exporter.export(Locale.FRENCH)).start();
 	}
 }
 
@@ -75,7 +75,6 @@ class InvoiceExporter {
 @Service
 class LabelService {
 	private final static Logger log = LoggerFactory.getLogger(LabelService.class);
-	@Autowired
 	private CountryRepo countryRepo;
 	
 	public LabelService(CountryRepo countryRepo) {
