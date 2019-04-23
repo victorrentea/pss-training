@@ -7,6 +7,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.xml.bind.DatatypeConverter;
 
@@ -20,13 +22,20 @@ import org.springframework.stereotype.Service;
 public class ExpensiveOps {
 	private final static Logger log = LoggerFactory.getLogger(ExpensiveOps.class);
 	
+	private Map<Integer, Boolean> cache = new HashMap<>();
+	
 	private static final BigDecimal TWO = new BigDecimal("2");
 	
 	public Boolean isPrime(int n) {
+		if(cache.containsKey(n)) {
+			return cache.get(n);
+		}
+		Boolean result = isPrime_______(n);
+		cache.put(n, result);
+		return result;
+	}
+	private Boolean isPrime_______(int n) {
 		log.debug("Computing isPrime({})", n);
-		
-//		new RuntimeException().printStackTrace();
-		
 		BigDecimal number = new BigDecimal(n);
 		if (number.compareTo(TWO) <= 0) {
 			return true;
