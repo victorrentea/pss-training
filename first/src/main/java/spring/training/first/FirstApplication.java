@@ -1,5 +1,7 @@
 package spring.training.first;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +33,11 @@ public class FirstApplication {
 	}
 }
 
+@Retention(RetentionPolicy.RUNTIME)
 @Component
+@interface Facade {}
+
+@Facade
 //@Service
 //@Repository
 //@Controller
