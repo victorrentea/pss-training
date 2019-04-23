@@ -4,12 +4,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Component;
+
 public interface ConfigProvider {
 	Properties getProperties();
 }
 
+@Component
+@Profile("local")
 class ConfigFileProvider implements ConfigProvider {
-	
 	public Properties getProperties() {
 		try (InputStream is = ConfigFileProvider.class.getResourceAsStream("/application.properties")) {
 			Properties properties = new Properties();
@@ -20,7 +24,8 @@ class ConfigFileProvider implements ConfigProvider {
 		}
 	}
 }
-
+@Profile("!local")
+@Component
 class ConfigDatabaseProvider implements ConfigProvider {
 
 	public Properties getProperties() {
