@@ -1,10 +1,9 @@
 package spring.training.proxy;
 
-import java.io.File;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -49,8 +48,12 @@ class Runner implements CommandLineRunner {
 	// [6] Tips: self proxy, debugging, final
 	// [7] OPT: Manual proxying using BeanPostProcessor23
 	
+	// Holy Domain Logic. 
+	// Very precious things that I want to keep agnostic to technical details
+	@Autowired
+	private IExpensiveOps ops;
 	public void run(String... args) throws Exception {
-		ExpensiveOps ops =new ExpensiveOps();
+		
 		log.debug("\n");
  		log.debug("---- CPU Intensive ~ memoization?");
 		log.debug("10000169 is prime ? ");
