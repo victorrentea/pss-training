@@ -48,6 +48,10 @@ class A implements CommandLineRunner {
 		System.out.println("Pe fii-mea o cheama : " + emma.getName());
 		Person vlad = (Person) spring.getBean("vlad");
 		System.out.println("Pe fii-miu o cheama : " + vlad.getName());
+		
+		//by default, numele oricarui @Component/... adaugat 
+		// automat este lower-CamelCase al numelui clasei
+		System.out.println(spring.getBean("dacaEra"));
 	}
 }
 
@@ -66,10 +70,10 @@ class Person {
 @Component
 class B {
 	private C c;
-	private D d;
+	private DacaEra d;
 	// Daca Spring vede o clasa @Component/Service care are un singur constructor 
 	// va incerca automat sa apeleze acel constructor cu bean-uri compatibile din "galeata"
-	public B(C c, D d) {
+	public B(C c, DacaEra d) {
 		this.c = c;
 		this.d = d;
 	}
@@ -81,5 +85,5 @@ class B {
 @Component
 class C {}
 @Component
-class D {}
+class DacaEra {}
 
