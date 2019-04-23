@@ -3,8 +3,6 @@ package spring.training.lifecycle;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.annotation.PostConstruct;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +11,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Scope;
 import org.springframework.context.support.SimpleThreadScope;
 import org.springframework.stereotype.Service;
 
@@ -50,13 +50,11 @@ class OrderExporter  {
 	private final static Logger log = LoggerFactory.getLogger(OrderExporter.class);
 	@Autowired
 	private InvoiceExporter invoiceExporter;
-//	@Autowired
-//	private LabelService labelService;
 	@Autowired
-	private CountryRepo countryRepo;
+	private ApplicationContext spring;
 
 	public void export(Locale locale) {
-		LabelService labelService = new LabelService(countryRepo);
+		LabelService labelService = spring.getBean(LabelService.class);
 		labelService.load(locale);
 		log.debug("Running export in " + locale);
 		log.debug("Origin Country: " + labelService.getCountryName("rO")); 
@@ -75,7 +73,8 @@ class InvoiceExporter {
 	}
 }
 
-//@Service
+@Service
+@Scope("prototype")
 class LabelService {
 	private final static Logger log = LoggerFactory.getLogger(LabelService.class);
 	private CountryRepo countryRepo;
