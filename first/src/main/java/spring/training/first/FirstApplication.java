@@ -1,12 +1,14 @@
 package spring.training.first;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 @SpringBootApplication
@@ -14,7 +16,7 @@ public class FirstApplication {
 	
 	//cream manual o instanta de Person invocand dupa gust constructorul, 
 	//sau facand ce alte initializari mai aveam nevoie
-	@Primary // Oridecate ori Spring trebuie sa aleaga intre asta si altu, il ia pe asta !
+	// @Primary // Oridecate ori Spring trebuie sa aleaga intre asta si altu, il ia pe asta !
 	@Bean
 	public Person emma() {
 		return new Person("Emma");
@@ -42,7 +44,11 @@ class A implements CommandLineRunner {
 	private ApplicationContext spring;
 	
 	@Autowired
+	@Qualifier("vlad")
 	private Person person;
+	
+	@Autowired
+	private List<Person> totiCopii;
 
 	public void run(String... args) throws Exception {
 		System.out.println("Hello Spring Boot!");
@@ -56,9 +62,19 @@ class A implements CommandLineRunner {
 		
 		//by default, numele oricarui @Component/... adaugat 
 		// automat este lower-CamelCase al numelui clasei
-		System.out.println(spring.getBean("dacaEra"));
+		if (Math.random() > 0.5) {
+			System.out.println(spring.getBean("dacaEra")); // URAT!!! cum sa pui nume de clasa intre "ghilimele"
+			// getBean(String) facut la runtime e periculos, ca poate nu cazi in eroare
+			// decat in Productie
+			// spring.getBean("dacaEraXXX")
+			DacaEra dacaEra = spring.getBean(DacaEra.class);
+			System.out.println("Bean luat dupa tip: " + dacaEra);
+		}
+//		System.out.println(spring.getBean("dacaEra"));
 		
 		System.out.println("CopilUL: " + person);
+		
+		System.out.println("Toti copiii: " + totiCopii);
 	}
 }
 
