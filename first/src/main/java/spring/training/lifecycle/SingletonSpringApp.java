@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.CustomScopeConfigurer;
 import org.springframework.boot.CommandLineRunner;
@@ -43,8 +42,62 @@ public class SingletonSpringApp implements CommandLineRunner{
 	public void run(String... args) throws Exception {
 		new Thread(() -> exporter.export(Locale.ENGLISH)).start();
 		new Thread(() -> exporter.export(Locale.FRENCH)).start();
+		
+	}
+	
+	@Autowired
+	private Singleton1 s1;
+	@Autowired
+	private Singleton1 s1Prim;
+}
+
+
+// TODO FIXME XXX joacate aici !!
+
+
+@Service
+class Singleton1 {
+	@Autowired
+	private Prototype1 p1;
+	
+	@Autowired
+	private Prototype1 p1Prim;
+	
+	public Singleton1() {
+		System.out.println("+Singleton1");
 	}
 }
+
+@Service
+@Scope("prototype")
+class Prototype1 {
+	
+	@Autowired 
+	private Prototype2 p2;
+	@Autowired 
+	private Prototype2 p2Prim;
+	@Autowired
+	private XX x;
+	public Prototype1() {
+		System.out.println("+Prototype1");
+	}
+}
+@Service
+@Scope("prototype")
+class Prototype2 {
+	public Prototype2() {
+		System.out.println("+Prototype2");
+	}
+}
+@Service
+class XX {
+	public XX() {
+		System.out.println("+XX");
+	}
+	
+}
+
+
 
 @Service
 class OrderExporter  {
