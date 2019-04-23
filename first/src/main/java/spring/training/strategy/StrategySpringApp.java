@@ -38,13 +38,7 @@ public class StrategySpringApp implements CommandLineRunner {
 @Service
 class CustomsService {
 	@Autowired
-	private UKTaxComputer uk;
-	
-	@Autowired
-	private EUTaxComputer eu;
-	
-	@Autowired
-	private CHTaxComputer ch;
+	private List<TaxComputer> computers;
 	
 	public double computeCustomsTax(String originCountry, double tobacoValue, double regularValue) { // UGLY API we CANNOT change
 		TaxComputer pece = getTaxComputer(originCountry);
@@ -52,13 +46,10 @@ class CustomsService {
 	}
 
 	private TaxComputer getTaxComputer(String originCountry) {
-		List<TaxComputer> computers = asList(uk,ch,eu);
-		for (TaxComputer taxComputer : computers) {
-			if (taxComputer.accepts(originCountry)) {
-				return taxComputer;
-			}
-		}
-		throw new IllegalArgumentException(originCountry);
+		return computers.stream()
+				.filter(taxComputer -> taxComputer.accepts(originCountry))
+				.findAny()
+				.orElseThrow(() -> new IllegalArgumentException(originCountry));
 	}
 }
 
