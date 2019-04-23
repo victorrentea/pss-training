@@ -20,7 +20,6 @@ import org.springframework.stereotype.Service;
 @EnableCaching
 @SpringBootApplication
 public class SingletonSpringApp implements CommandLineRunner{
-	private final static Logger log = LoggerFactory.getLogger(SingletonSpringApp.class);
 	@Bean
 	public static CustomScopeConfigurer defineThreadScope() {
 		CustomScopeConfigurer configurer = new CustomScopeConfigurer();
@@ -42,7 +41,7 @@ public class SingletonSpringApp implements CommandLineRunner{
 	// TODO [5] (after AOP): RequestContext, @Cacheable. on thread?! @ThreadLocal
 	public void run(String... args) throws Exception {
 		exporter.export(Locale.ENGLISH);
-//		exporter.export(Locale.FRENCH);
+		exporter.export(Locale.FRENCH);
 	}
 }
 
@@ -55,6 +54,7 @@ class OrderExporter  {
 	private LabelService labelService;
 
 	public void export(Locale locale) {
+		labelService.load(locale);
 		log.debug("Running export in " + locale);
 		log.debug("Origin Country: " + labelService.getCountryName("rO")); 
 		invoiceExporter.exportInvoice();
@@ -79,14 +79,14 @@ class LabelService {
 	private CountryRepo countryRepo;
 	
 	public LabelService(CountryRepo countryRepo) {
+		System.out.println("+1 Label Service");
 		this.countryRepo = countryRepo;
 	}
 
 	private Map<String, String> countryNames;
 	
-	@PostConstruct
-	public void load() {
-		countryNames = countryRepo.loadCountryNamesAsMap(Locale.ENGLISH);
+	public void load(Locale locale) {
+		countryNames = countryRepo.loadCountryNamesAsMap(locale);
 	}
 	
 	public String getCountryName(String iso2Code) {
