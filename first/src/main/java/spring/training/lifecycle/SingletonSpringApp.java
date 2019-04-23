@@ -5,8 +5,8 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Lookup;
 import org.springframework.beans.factory.config.CustomScopeConfigurer;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -46,15 +46,17 @@ public class SingletonSpringApp implements CommandLineRunner{
 }
 
 @Service
-class OrderExporter  {
+abstract class OrderExporter  {
 	private final static Logger log = LoggerFactory.getLogger(OrderExporter.class);
 	@Autowired
 	private InvoiceExporter invoiceExporter;
-	@Autowired
-	private ObjectFactory<LabelService> labelServiceFactory;
+//	@Autowired
+//	private ObjectFactory<LabelService> labelServiceFactory;
+	@Lookup
+	protected abstract LabelService getLabelService();
 
 	public void export(Locale locale) {
-		LabelService labelService = labelServiceFactory.getObject();
+		LabelService labelService = getLabelService();
 		labelService.load(locale);
 		log.debug("Running export in " + locale);
 		log.debug("Origin Country: " + labelService.getCountryName("rO")); 
