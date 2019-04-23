@@ -6,6 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 @SpringBootApplication
@@ -13,6 +14,7 @@ public class FirstApplication {
 	
 	//cream manual o instanta de Person invocand dupa gust constructorul, 
 	//sau facand ce alte initializari mai aveam nevoie
+	@Primary // Oridecate ori Spring trebuie sa aleaga intre asta si altu, il ia pe asta !
 	@Bean
 	public Person emma() {
 		return new Person("Emma");
@@ -38,6 +40,9 @@ class A implements CommandLineRunner {
 	
 	@Autowired
 	private ApplicationContext spring;
+	
+	@Autowired
+	private Person person;
 
 	public void run(String... args) throws Exception {
 		System.out.println("Hello Spring Boot!");
@@ -54,7 +59,6 @@ class A implements CommandLineRunner {
 		System.out.println(spring.getBean("dacaEra"));
 	}
 }
-
 
 class Person {
 	private final String name;
