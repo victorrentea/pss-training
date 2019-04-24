@@ -47,7 +47,8 @@ public class CoursesController {
 	@GetMapping
 	public List<CourseDto> search(
 			@RequestParam(required=false, value = "name") String namePart, 
-			@RequestParam(required=false, value = "teacherId") Long teacherId) {
+			@RequestParam(required=false, value = "teacherId") Long teacherId
+			) {
 		
 		Stream<Course> stream = courseRepo.findAll().stream();
 		if (teacherId != null) {
