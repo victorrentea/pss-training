@@ -1,8 +1,7 @@
 package training.spring.domain;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.Optional;
 
 public class Course extends BaseEntity {
 	private String name;
