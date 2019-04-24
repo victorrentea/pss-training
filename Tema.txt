@@ -1,0 +1,32 @@
+Buna,
+
+Enuntul proiectului este urmatorul:
+O aplicatie web care va permite gestionarea salilor si echipamentelor in PSS.
+
+O sala este determinata de un id, numele salii, numarul de locuri disponibile, etajul.
+Un echipament este determinat de un id, tipul echipamentului (TV, proiector, spider speaker, telefon, aer conditionat), seria echipamentului;
+O sala poate avea mai multe echipamente disponibile, care se pot adauga prin intermediul aplicatiei, odata cu adaugarea unei sali, sau se pot schimba ulterior.
+O rezervare este determinata de un id, un interval orar (cele doua date intre care sala este rezervata), sala pentru care se realizeaza rezervarea si participanti.
+Un participant este determinat de un id, nume, prenume si id-ul angajatului.
+
+Aplicatia va expunse servicii REST prin intermediul carora:
+•	se pot adauga sali;
+•	se pot modifica sali (numele, numarul de locuri disponibile, etajul, se pot adauga sau sterge echipamente);
+•	se pot sterge sali;
+•	se pot realiza cautari :
+	•	dupa ID, care intoarce o singura sala/echipament;
+	•	dupa alte criterii (care intorc o lista de rezultate): cautarea unei sali dupa etaj/ numarul de locuri/ tipul unui echipament  - toate 3 criteriile pot fi prezente, sau doar o parte din ele;
+	•	disponibilitatea unei sali intr-un interval orar (ore fixe);
+	•	cautarea unui angajat dupa id-ul angajatului / nume / prenume  - toate 3 criteriile pot fi prezente, sau doar o parte din ele.
+•	se pot efectua rezervari;
+•	se pot anula rezervari;
+•	se pot modifica rezervari (ora, sala).
+
+Va pun aici un alt articol util, in care sunt sumarizate adnotarile de Spring:
+https://springframework.guru/spring-framework-annotations/#wrapper
+-	Dupa ce va creati proiectul, pasii urmatori sunt :
+o	Creati o aplicatie Spring Boot
+o	Creati serviciile REST: doar clasele pentru controller-ele REST si niste service-uri in care sa puneti logica aplicatiei, fara sa va focusati inca pe interactiunea cu baza de date (creati clasele Java de care aveti nevoie pentru definirea universului problemei, iar in clasele de tip service va instantiati obiectele pe care veti lucra si le populati cu niste valori alese de voi)
+Saptamana viitoare o sa fie axata pe crearea bazei de date si persistenta, iar scopul va fi:
+-	sa transformam clasele Java in entitati JPA
+-	sa inlocuim implementarea care foloseste instante populate cu date dummy din clasele de tip service cu apelurile corespunzatoare la baza de date
