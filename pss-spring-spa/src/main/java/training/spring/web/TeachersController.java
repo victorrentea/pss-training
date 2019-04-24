@@ -21,7 +21,7 @@ public class TeachersController {
 	}
 
 	@GetMapping
-	public List<TeacherDto> getTeachers() {
+	public List<TeacherDto> getTeachers() { 
 		return repo.findAll().stream().map(TeacherDto::new).collect(toList());
 	}
 }

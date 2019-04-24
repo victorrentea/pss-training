@@ -8,11 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import training.spring.domain.Course;
 import training.spring.repo.CourseRepository;
+import training.spring.repo.TeacherRepository;
 import training.spring.web.dto.CourseDto;
 
 @RestController
@@ -20,24 +23,35 @@ import training.spring.web.dto.CourseDto;
 public class CoursesController {
 
 	@Autowired
-	private CourseRepository repo;
+	private CourseRepository courseRepo;
+	
+	@Autowired
+	private TeacherRepository teacherRepo;
 	
 	@GetMapping
 	public List<CourseDto> getCourses() {
-		return repo.findAll().stream().map(CourseDto::new).collect(toList());
+		return courseRepo.findAll().stream().map(CourseDto::new).collect(toList());
 	}
 	
 	@DeleteMapping("{id}")
 	public void deleteCourse(@PathVariable Long id) {
-		repo.deleteById(id);
+		courseRepo.deleteById(id);
 	}
 	
 	
 //	@RequestMapping(value = "courses/{id}", method = RequestMethod.GET)
 	@GetMapping("{id}")
 	public CourseDto getCourse(@PathVariable Long id) {
-		Course entity = repo.getById(id);
+		Course entity = courseRepo.getById(id);
 		return new CourseDto(entity);
+	}
+	
+	@PutMapping("{id}")
+	public void updateCourse(@PathVariable Long id, 
+			@RequestBody CourseDto updatedCourse) {
+		Course course = courseRepo.getById(id);
+		course.setName(updatedCourse.name);
+		course.setTeacher(teacherRepo.getById(updatedCourse.teacherId));
 	}
 	
 	

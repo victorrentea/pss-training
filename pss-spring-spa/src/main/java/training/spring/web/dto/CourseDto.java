@@ -14,6 +14,8 @@ public class CourseDto {
 	public long teacherId;
 	public String teacherName;
 	
+	public CourseDto() {
+	}
 	public CourseDto(Course entity) {
 		id = entity.getId();
 		name = entity.getName();
