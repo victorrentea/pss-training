@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import training.spring.domain.Course;
@@ -35,9 +37,28 @@ public class CoursesController {
 	@Autowired
 	private TeacherRepository teacherRepo;
 	
+//	@GetMapping
+//	public List<CourseDto> getCourses() {
+//		return courseRepo.findAll().stream().map(CourseDto::new).collect(toList());
+//	}
+	
+	//localhost:8089/rest/courses?name=Spring&teacherId=1
 	@GetMapping
-	public List<CourseDto> getCourses() {
-		return courseRepo.findAll().stream().map(CourseDto::new).collect(toList());
+	public List<CourseDto> search(
+			@RequestParam(required=false, value = "name") String namePart, 
+			@RequestParam(required=false, value = "teacherId") Long teacherId) {
+		
+		Stream<Course> stream = courseRepo.findAll().stream();
+		if (teacherId != null) {
+			stream = stream.filter(c -> c.getTeacher().getId()  == teacherId);
+		}
+		if (StringUtils.isNoneBlank(namePart)) {
+			stream = stream.filter(c -> c.getName().toUpperCase().contains(namePart.toUpperCase()));
+		}
+		
+		return stream
+			.map(CourseDto::new)
+			.collect(toList());
 	}
 	
 	@DeleteMapping("{id}")
@@ -70,7 +91,7 @@ public class CoursesController {
 		targetEntity.setName(sourceDto.name);
 		targetEntity.setTeacher(teacherRepo.getById(sourceDto.teacherId));
 		if (StringUtils.isBlank(sourceDto.description)) {
-			throw new IllegalArgumentException("Course description is a mandatory field that should have been validated in the UI, you dirty lttle hacker !!!");
+			throw new IllegalArgumentException("error.description.mandatory");
 		}
 		targetEntity.setDescription(sourceDto.description);
 		SimpleDateFormat sdf = new SimpleDateFormat(CourseDto.START_DATE_PATTERN);
@@ -78,5 +99,7 @@ public class CoursesController {
 		Date startDate = sdf.parse(sourceDto.startDate);
 		targetEntity.setStartDate(startDate);
 	}
+	
+	
 	
 }
