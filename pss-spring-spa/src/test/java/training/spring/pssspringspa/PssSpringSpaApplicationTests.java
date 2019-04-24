@@ -1,6 +1,5 @@
 package training.spring.pssspringspa;
 
-import static org.hamcrest.CoreMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -12,9 +11,11 @@ import org.mockito.ArgumentMatchers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import training.spring.domain.Course;
+import training.spring.OrderPlacer;
 import training.spring.domain.Teacher;
 import training.spring.repo.CourseRepository;
 import training.spring.repo.TeacherRepository;
@@ -32,6 +33,8 @@ public class PssSpringSpaApplicationTests {
 	private TeacherRepository teacherRepo;
 	@MockBean
 	private CourseRepository courseRepo;
+	
+
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void createCourseFailsForMissingDescription() throws ParseException {

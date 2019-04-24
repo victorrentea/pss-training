@@ -10,10 +10,7 @@ import java.util.stream.Stream;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import training.spring.OrderPlacer;
 import training.spring.domain.Course;
 import training.spring.repo.CourseRepository;
 import training.spring.repo.TeacherRepository;
@@ -37,6 +35,10 @@ public class CoursesController {
 	
 	@Autowired
 	private TeacherRepository teacherRepo;
+	
+	@Autowired
+	private OrderPlacer orderPlacer;
+	
 	
 //	@GetMapping
 //	public List<CourseDto> getCourses() {
@@ -86,6 +88,7 @@ public class CoursesController {
 	public void createCourse(@RequestBody CourseDto dto) throws ParseException {
 		Course entity = new Course();
 		fill(dto, entity);
+		System.out.println("logica: " + orderPlacer.logica());
 		courseRepo.save(entity);
 	}
 	
