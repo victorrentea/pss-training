@@ -16,8 +16,7 @@ public class SchedulerPlay {
 		log.debug("Ce frumos esti!");
 	}
 	
-	
-	@Scheduled(cron = "0/5 * * * * *")
+	@Scheduled(cron = "${cron.expr}")
 	public void hater() throws InterruptedException {
 		log.debug("Ii spun acush...");
 		Thread.sleep(6000);
