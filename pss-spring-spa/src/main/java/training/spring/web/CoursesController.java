@@ -19,8 +19,6 @@ public class CoursesController {
 	
 	@RequestMapping("/rest/courses")
 	public List<CourseDto> getCourses() {
-		return repo.findAll().stream()
-				.map(e -> new CourseDto(e))
-				.collect(toList());
+		return repo.findAll().stream().map(CourseDto::new).collect(toList());
 	}
 }
