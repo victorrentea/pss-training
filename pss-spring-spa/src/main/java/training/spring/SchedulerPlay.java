@@ -9,14 +9,14 @@ import org.springframework.stereotype.Component;
 public class SchedulerPlay {
 	private final static Logger log = LoggerFactory.getLogger(SchedulerPlay.class);
 
-	@Scheduled(cron = "0/5 * * * * *")
+//	@Scheduled(cron = "0/5 * * * * *")
 	public void helloNarcis() throws InterruptedException {
 		log.debug("Ii spun acush...");
 		Thread.sleep(6000);
 		log.debug("Ce frumos esti!");
 	}
 	
-	@Scheduled(cron = "${cron.expr}")
+//	@Scheduled(cron = "${cron.expr}")
 	public void hater() throws InterruptedException {
 		log.debug("Ii spun acush...");
 		Thread.sleep(6000);
