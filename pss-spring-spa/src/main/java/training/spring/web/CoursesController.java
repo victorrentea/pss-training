@@ -7,11 +7,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,7 +45,6 @@ public class CoursesController {
 		courseRepo.deleteById(id);
 	}
 	
-	
 //	@RequestMapping(value = "courses/{id}", method = RequestMethod.GET)
 	@GetMapping("{id}")
 	public CourseDto getCourse(@PathVariable Long id) {
@@ -51,22 +53,30 @@ public class CoursesController {
 	}
 	
 	@PutMapping("{id}")
-	public ResponseEntity<Object> updateCourse(@PathVariable Long id, 
-			@RequestBody CourseDto updatedCourse) {
-		Course course = courseRepo.getById(id);
-		course.setName(updatedCourse.name);
-		course.setTeacher(teacherRepo.getById(updatedCourse.teacherId));
-		course.setDescription(updatedCourse.description);
-		try {
-			SimpleDateFormat sdf = new SimpleDateFormat(CourseDto.START_DATE_PATTERN);
-			sdf.setLenient(false);
-			Date startDate = sdf.parse(updatedCourse.startDate);
-			course.setStartDate(startDate);
-		} catch (ParseException exception) {
-			return ResponseEntity.badRequest().body("ceva");
-		}
-		return ResponseEntity.ok().build();
+	public void updateCourse(@PathVariable Long id, 
+			@RequestBody CourseDto dto) throws ParseException {
+		Course entity = courseRepo.getById(id);
+		fill(dto, entity);
 	}
 	
+	@PostMapping
+	public void createCourse(@RequestBody CourseDto dto) throws ParseException {
+		Course entity = new Course();
+		fill(dto, entity);
+		courseRepo.save(entity);
+	}
+	
+	private void fill(CourseDto sourceDto, Course targetEntity) throws ParseException {
+		targetEntity.setName(sourceDto.name);
+		targetEntity.setTeacher(teacherRepo.getById(sourceDto.teacherId));
+		if (StringUtils.isBlank(sourceDto.description)) {
+			throw new IllegalArgumentException("Course description is a mandatory field that should have been validated in the UI, you dirty lttle hacker !!!");
+		}
+		targetEntity.setDescription(sourceDto.description);
+		SimpleDateFormat sdf = new SimpleDateFormat(CourseDto.START_DATE_PATTERN);
+		sdf.setLenient(false);
+		Date startDate = sdf.parse(sourceDto.startDate);
+		targetEntity.setStartDate(startDate);
+	}
 	
 }
