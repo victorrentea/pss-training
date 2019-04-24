@@ -7,6 +7,7 @@ import training.spring.domain.Course;
 import training.spring.domain.Teacher;
 
 public class CourseDto {
+	public static final String START_DATE_PATTERN = "yyyy-MM-dd";
 	public Long id; 
 	public String name;
 	public String description;
@@ -20,7 +21,7 @@ public class CourseDto {
 		id = entity.getId();
 		name = entity.getName();
 		description = entity.getDescription();
-		startDate = new SimpleDateFormat("yyyy-MM-dd").format(entity.getStartDate());
+		startDate = new SimpleDateFormat(START_DATE_PATTERN).format(entity.getStartDate());
 		teacherId = entity.getTeacher().getId();
 		teacherName = entity.getTeacher().getName();
 	}

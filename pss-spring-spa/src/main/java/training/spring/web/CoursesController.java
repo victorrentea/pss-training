@@ -2,9 +2,13 @@ package training.spring.web;
 
 import static java.util.stream.Collectors.toList;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -47,11 +51,21 @@ public class CoursesController {
 	}
 	
 	@PutMapping("{id}")
-	public void updateCourse(@PathVariable Long id, 
+	public ResponseEntity<Object> updateCourse(@PathVariable Long id, 
 			@RequestBody CourseDto updatedCourse) {
 		Course course = courseRepo.getById(id);
 		course.setName(updatedCourse.name);
 		course.setTeacher(teacherRepo.getById(updatedCourse.teacherId));
+		course.setDescription(updatedCourse.description);
+		try {
+			SimpleDateFormat sdf = new SimpleDateFormat(CourseDto.START_DATE_PATTERN);
+			sdf.setLenient(false);
+			Date startDate = sdf.parse(updatedCourse.startDate);
+			course.setStartDate(startDate);
+		} catch (ParseException exception) {
+			return ResponseEntity.badRequest().body("ceva");
+		}
+		return ResponseEntity.ok().build();
 	}
 	
 	
