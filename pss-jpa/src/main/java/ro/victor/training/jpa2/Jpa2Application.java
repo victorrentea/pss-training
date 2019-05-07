@@ -29,7 +29,15 @@ public class Jpa2Application {
 		System.out.println(" ========= FIRST TRANSACTION ========== ");
 		playground.firstTransaction();
 		System.out.println(" ========= SECOND TRANSACTION ========== ");
-		playground.secondTransaction();
+		try {
+			playground.secondTransaction();
+		} catch (Throwable tot) {
+			//shaorma
+		}
+		System.out.println(" ========= THIRD TRANSACTION ========== ");
+		playground.third();
+		System.out.println(" ========= forth TRANSACTION ========== ");
+		playground.forth();
 		System.out.println(" ========= END ========== ");
 	}
 	

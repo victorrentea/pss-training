@@ -122,7 +122,8 @@ public class Teacher {
 	}
 
 	public Set<Subject> getHeldSubjects() {
-		return unmodifiableSet(heldSubjects);
+//		return unmodifiableSet(heldSubjects);
+		return heldSubjects;
 	}
 
 	public void addSubject(Subject subject) {
