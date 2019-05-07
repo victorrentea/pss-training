@@ -32,7 +32,7 @@ public class AsyncPlaygroundController {
 	@Component
 	public static class Worker {
 	
-		@Async
+		@Async()
 		public Future<Void> task1() {
 			log.info("start1");
 			try {

@@ -12,10 +12,14 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.LifecycleProcessor;
+import org.springframework.context.SmartLifecycle;
 import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Component;
 
 @SpringBootApplication
+@EnableAsync
 public class FirstApplication {
 	
 	//cream manual o instanta de Person invocand dupa gust constructorul, 
@@ -194,4 +198,32 @@ class DeMana {
 		}
 		return INSTANCE;
 	}
+}
+
+@Component
+class Monitor implements SmartLifecycle, LifecycleProcessor {
+
+	public boolean isAutoStartup() {
+		return false;
+	}
+	public void start() {
+		 System.out.println("Start");
+	}
+
+	public void stop() {
+		System.out.println("Stop");
+	}
+
+	public boolean isRunning() {
+		System.out.println("is running");
+		return true; // TODO
+	}
+	public void onRefresh() {
+		 // TODO
+	}
+	public void onClose() {
+		 System.out.println("onClose");
+	}
+	
+	
 }

@@ -1,6 +1,7 @@
 package training.spring.repo;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.web.context.annotation.RequestScope;
 
 import training.spring.domain.Course;
 
