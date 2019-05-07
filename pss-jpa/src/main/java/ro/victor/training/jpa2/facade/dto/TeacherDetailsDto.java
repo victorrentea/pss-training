@@ -22,10 +22,10 @@ public class TeacherDetailsDto {
 			cv = teacher.getDetails().getCv();
 		}
 		counselingInterval = new TimeSlotDto(
-				teacher.getCounselingDay(), 
-				teacher.getCounselingStartHour(), 
-				teacher.getCounselingDurationInHours(),
-				teacher.getCounselingRoomId()
+				teacher.getCounselingTimeSlot().getDay(), 
+				teacher.getCounselingTimeSlot().getStartHour(), 
+				teacher.getCounselingTimeSlot().getDurationInHours(),
+				teacher.getCounselingTimeSlot().getRoomId()
 				);
 	}
 }

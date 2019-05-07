@@ -18,6 +18,18 @@ public class TimeSlot {
 	
 	private String roomId;
 
+	public TimeSlot() {
+	}
+	
+	
+	public TimeSlot(DayOfWeek day, int startHour, int durationInHours, String roomId) {
+		this.day = day;
+		this.startHour = startHour;
+		this.durationInHours = durationInHours;
+		this.roomId = roomId;
+	}
+
+
 	public DayOfWeek getDay() {
 		return day;
 	}

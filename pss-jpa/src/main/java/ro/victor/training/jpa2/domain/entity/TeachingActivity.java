@@ -24,6 +24,8 @@ public abstract class TeachingActivity {
 	
 	@Embedded
 	private TimeSlot timeSlot;
+	
+	private String lastModifiedBy;
  
 	@ManyToMany
 	private Set<Teacher> teachers = new HashSet<>();
@@ -71,7 +73,16 @@ public abstract class TeachingActivity {
 	public void setLastModifiedDate(LocalDate lastModifiedDate) {
 		this.lastModifiedDate = lastModifiedDate;
 	}
+
+	public String getLastModifiedBy() {
+		return lastModifiedBy;
+	}
+
+	public void setLastModifiedBy(String lastModifiedBy) {
+		this.lastModifiedBy = lastModifiedBy;
+	}
 	
+
 	
 
 	

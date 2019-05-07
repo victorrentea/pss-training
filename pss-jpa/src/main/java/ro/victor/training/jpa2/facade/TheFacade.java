@@ -27,6 +27,7 @@ import ro.victor.training.jpa2.domain.entity.Subject;
 import ro.victor.training.jpa2.domain.entity.Teacher;
 import ro.victor.training.jpa2.domain.entity.TeacherDetails;
 import ro.victor.training.jpa2.domain.entity.TeachingActivity;
+import ro.victor.training.jpa2.domain.entity.TimeSlot;
 import ro.victor.training.jpa2.facade.dto.ContactChannelDto;
 import ro.victor.training.jpa2.facade.dto.StudentsGroupDto;
 import ro.victor.training.jpa2.facade.dto.SubjectDto;
@@ -91,10 +92,11 @@ public class TheFacade {
 	public long addLab(long subjectId, TimeSlotDto timeSlotDto) {
 		Subject subject = em.find(Subject.class, subjectId);
 		LabActivity lab = new LabActivity();
-//		lab.setDay(timeSlotDto.day);
-//		lab.setDurationInHours(timeSlotDto.durationInHours);
-//		lab.setStartHour(timeSlotDto.startHour);
-//		lab.setRoomId(timeSlotDto.roomId);
+		lab.setTimeSlot(new TimeSlot(
+				timeSlotDto.day, 
+				timeSlotDto.startHour, 
+				timeSlotDto.durationInHours, 
+				timeSlotDto.roomId));
 		subject.getActivities().add(lab);
 		lab.setSubject(subject);
 		em.persist(lab);

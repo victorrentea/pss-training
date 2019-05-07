@@ -23,7 +23,7 @@ public class LabDto {
 	public LabDto(LabActivity lab) {
 		id = lab.getId();
 		subjectName = lab.getSubject().getName();
-		timeSlot =  new TimeSlotDto(lab.getDay(), lab.getDurationInHours(), lab.getDurationInHours(), lab.getRoomId());
+		timeSlot =  new TimeSlotDto(lab.getTimeSlot().getDay(), lab.getTimeSlot().getDurationInHours(), lab.getTimeSlot().getDurationInHours(), lab.getTimeSlot().getRoomId());
 		if (lab.getGroup() != null) {
 			groupCode = lab.getGroup().getCode();
 		}
