@@ -8,6 +8,7 @@ import java.util.Set;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -17,6 +18,7 @@ import javax.persistence.ManyToOne;
 public abstract class TeachingActivity {
 	
 	@Id
+	@GeneratedValue
 	private Long id;
 	
 	@ManyToOne

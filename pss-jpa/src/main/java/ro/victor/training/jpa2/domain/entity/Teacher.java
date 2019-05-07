@@ -7,12 +7,14 @@ import java.util.Set;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
@@ -26,13 +28,14 @@ public class Teacher {
 	}
 	
 	@Id
+	@GeneratedValue
 	private Long id;
 	
 	private String name;
 	
 	@Enumerated(EnumType.STRING)
 	private Grade grade;
-	@OneToOne
+	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private TeacherDetails details;
 	
 	@ElementCollection
@@ -48,7 +51,7 @@ public class Teacher {
 	@AttributeOverrides({
 	     @AttributeOverride(name="startHour", column=@Column(name="COUNSELING_START_HOUR"))
 	})
-	private TimeSlot counselingTimeSlot;
+	private TimeSlot counselingTimeSlot = new TimeSlot();
 	
 	public Teacher() {
 		
