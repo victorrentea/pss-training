@@ -37,10 +37,12 @@ public class Teacher {
 	
 	@ElementCollection
 	private List<ContactChannel> channels = new ArrayList<>();
-//
-//	private Set<Subject> heldSubjects = new HashSet<>() ;
-//	
-//	private Set<TeachingActivity> activities = new HashSet<>();
+
+	@OneToMany(mappedBy = "holderTeacher")
+	private Set<Subject> heldSubjects = new HashSet<>() ;
+	
+	@ManyToMany(mappedBy = "teachers")
+	private Set<TeachingActivity> activities = new HashSet<>();
 	
 	private DayOfWeek counselingDay;
 	
@@ -64,92 +66,86 @@ public class Teacher {
 	public void setId(Long id) {
 		this.id = id;
 	}
-//
-//	public String getName() {
-//		return name;
-//	}
-//
-//	public void setName(String name) {
-//		this.name = name;
-//	}
-//
-//	public TeacherDetails getDetails() {
-//		return details;
-//	}
-//
-//	public void setDetails(TeacherDetails details) {
-//		this.details = details;
-//	}
-//
-//	public Grade getGrade() {
-//		return grade;
-//	}
-//
-//	public void setGrade(Grade grade) {
-//		this.grade = grade;
-//	}
-//
-//	public Set<TeachingActivity> getActivities() {
-//		return activities;
-//	}
-//
-//	public void setActivities(Set<TeachingActivity> activities) {
-//		this.activities = activities;
-//	}
-//
-//	public DayOfWeek getCounselingDay() {
-//		return counselingDay;
-//	}
-//
-//	public void setCounselingDay(DayOfWeek counselingDay) {
-//		this.counselingDay = counselingDay;
-//	}
-//
-//	public int getCounselingStartHour() {
-//		return counselingStartHour;
-//	}
-//
-//	public void setCounselingStartHour(int counselingStartHour) {
-//		this.counselingStartHour = counselingStartHour;
-//	}
-//
-//	public int getCounselingDurationInHours() {
-//		return counselingDurationInHours;
-//	}
-//
-//	public void setCounselingDurationInHours(int counselingDurationInHours) {
-//		this.counselingDurationInHours = counselingDurationInHours;
-//	}
-//
-//	public String getCounselingRoomId() {
-//		return counselingRoomId;
-//	}
-//
-//	public void setCounselingRoomId(String counselingRoomId) {
-//		this.counselingRoomId = counselingRoomId;
-//	}
-//
-//	public List<ContactChannel> getChannels() {
-//		return channels;
-//	}
-//
-//	public void setChannels(List<ContactChannel> channel) {
-//		this.channels = channel;
-//	}
-//
-//	public Set<Subject> getHeldSubjects() {
-//		return heldSubjects;
-//	}
-//
-//	public void setHeldSubjects(Set<Subject> heldSubjects) {
-//		this.heldSubjects = heldSubjects;
-//	}
-//	
-//	
-//	
-//	
-//
-//	
-//	
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public TeacherDetails getDetails() {
+		return details;
+	}
+
+	public void setDetails(TeacherDetails details) {
+		this.details = details;
+	}
+
+	public Grade getGrade() {
+		return grade;
+	}
+
+	public void setGrade(Grade grade) {
+		this.grade = grade;
+	}
+
+	public Set<TeachingActivity> getActivities() {
+		return activities;
+	}
+
+	public void setActivities(Set<TeachingActivity> activities) {
+		this.activities = activities;
+	}
+
+	public DayOfWeek getCounselingDay() {
+		return counselingDay;
+	}
+
+	public void setCounselingDay(DayOfWeek counselingDay) {
+		this.counselingDay = counselingDay;
+	}
+
+	public int getCounselingStartHour() {
+		return counselingStartHour;
+	}
+
+	public void setCounselingStartHour(int counselingStartHour) {
+		this.counselingStartHour = counselingStartHour;
+	}
+
+	public int getCounselingDurationInHours() {
+		return counselingDurationInHours;
+	}
+
+	public void setCounselingDurationInHours(int counselingDurationInHours) {
+		this.counselingDurationInHours = counselingDurationInHours;
+	}
+
+	public String getCounselingRoomId() {
+		return counselingRoomId;
+	}
+
+	public void setCounselingRoomId(String counselingRoomId) {
+		this.counselingRoomId = counselingRoomId;
+	}
+
+	public List<ContactChannel> getChannels() {
+		return channels;
+	}
+
+	public void setChannels(List<ContactChannel> channel) {
+		this.channels = channel;
+	}
+
+	public Set<Subject> getHeldSubjects() {
+		return heldSubjects;
+	}
+
+	public void setHeldSubjects(Set<Subject> heldSubjects) {
+		this.heldSubjects = heldSubjects;
+	}
+	
 
 }

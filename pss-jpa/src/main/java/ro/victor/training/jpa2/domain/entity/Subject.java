@@ -1,34 +1,30 @@
 package ro.victor.training.jpa2.domain.entity;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
-
-import ro.victor.training.jpa2.util.MyTrackingEntityListener;
-import ro.victor.training.jpa2.util.MyTrackingEntityListener.Trackable;
-
-public class Subject implements Trackable { 
+@Entity
+public class Subject {
+	@Id
 	private Long id;
 	
 	private String name;
 	
 	private boolean active;
 	
+	@ManyToOne
 	private Teacher holderTeacher;
 	
+	@OneToMany(mappedBy = "subject")
 	private List<TeachingActivity> activities = new ArrayList<>();
 	
-	private LocalDateTime lastModifiedDate;
+	private LocalDate lastModifiedDate;
 	
 	private String lastModifiedBy;
 
@@ -97,7 +93,7 @@ public class Subject implements Trackable {
 		return lastModifiedBy;
 	}
 	
-	public LocalDateTime getLastModifiedDate() {
+	public LocalDate getLastModifiedDate() {
 		return lastModifiedDate;
 	}
 
@@ -105,7 +101,7 @@ public class Subject implements Trackable {
 		this.lastModifiedBy = lastModifiedBy;
 	}
 	
-	public void setLastModifiedDate(LocalDateTime lastModifiedDate) {
+	public void setLastModifiedDate(LocalDate lastModifiedDate) {
 		this.lastModifiedDate = lastModifiedDate;
 	}
 	

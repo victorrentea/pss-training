@@ -1,30 +1,27 @@
 package ro.victor.training.jpa2.domain.entity;
 
 import java.time.DayOfWeek;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
+@Entity
+@DiscriminatorColumn(name = "TYPE")
 public abstract class TeachingActivity {
 	
+	@Id
 	private Long id;
 	
+	@ManyToOne
 	private Subject subject;
+	
 	
 	private DayOfWeek day;
 	
@@ -34,10 +31,11 @@ public abstract class TeachingActivity {
 	
 	private String roomId;
 	
-	private LocalDateTime lastModifiedDate;
+	private LocalDate lastModifiedDate;
 	
 	private String lastModifiedBy;
 	
+	@ManyToMany
 	private Set<Teacher> teachers = new HashSet<>();
 	
 	
@@ -103,7 +101,7 @@ public abstract class TeachingActivity {
 		return lastModifiedBy;
 	}
 	
-	public LocalDateTime getLastModifiedDate() {
+	public LocalDate getLastModifiedDate() {
 		return lastModifiedDate;
 	}
 	
