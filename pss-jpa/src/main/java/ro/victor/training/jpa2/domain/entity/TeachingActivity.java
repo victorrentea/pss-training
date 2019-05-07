@@ -6,9 +6,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.DiscriminatorColumn;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
@@ -22,23 +22,13 @@ public abstract class TeachingActivity {
 	@ManyToOne
 	private Subject subject;
 	
-	
-	private DayOfWeek day;
-	
-	private int startHour;
-	
-	private int durationInHours;
-	
-	private String roomId;
-	
-	private LocalDate lastModifiedDate;
-	
-	private String lastModifiedBy;
-	
+	@Embedded
+	private TimeSlot timeSlot;
+ 
 	@ManyToMany
 	private Set<Teacher> teachers = new HashSet<>();
 	
-	
+	private LocalDate lastModifiedDate;
 
 	public Long getId() {
 		return id;
@@ -57,37 +47,6 @@ public abstract class TeachingActivity {
 		this.subject = subject;
 	}
 
-	public DayOfWeek getDay() {
-		return day;
-	}
-
-	public void setDay(DayOfWeek day) {
-		this.day = day;
-	}
-
-	public int getStartHour() {
-		return startHour;
-	}
-
-	public void setStartHour(int startHour) {
-		this.startHour = startHour;
-	}
-
-	public int getDurationInHours() {
-		return durationInHours;
-	}
-
-	public void setDurationInHours(int durationInHours) {
-		this.durationInHours = durationInHours;
-	}
-
-	public String getRoomId() {
-		return roomId;
-	}
-
-	public void setRoomId(String roomId) {
-		this.roomId = roomId;
-	}
 
 	public Set<Teacher> getTeachers() {
 		return teachers;
@@ -96,15 +55,24 @@ public abstract class TeachingActivity {
 	public void setTeachers(Set<Teacher> teachers) {
 		this.teachers = teachers;
 	}
-	
-	public String getLastModifiedBy() {
-		return lastModifiedBy;
+
+	public TimeSlot getTimeSlot() {
+		return timeSlot;
 	}
-	
+
+	public void setTimeSlot(TimeSlot timeSlot) {
+		this.timeSlot = timeSlot;
+	}
+
 	public LocalDate getLastModifiedDate() {
 		return lastModifiedDate;
 	}
+
+	public void setLastModifiedDate(LocalDate lastModifiedDate) {
+		this.lastModifiedDate = lastModifiedDate;
+	}
 	
 	
+
 	
 }

@@ -91,10 +91,10 @@ public class TheFacade {
 	public long addLab(long subjectId, TimeSlotDto timeSlotDto) {
 		Subject subject = em.find(Subject.class, subjectId);
 		LabActivity lab = new LabActivity();
-		lab.setDay(timeSlotDto.day);
-		lab.setDurationInHours(timeSlotDto.durationInHours);
-		lab.setStartHour(timeSlotDto.startHour);
-		lab.setRoomId(timeSlotDto.roomId);
+//		lab.setDay(timeSlotDto.day);
+//		lab.setDurationInHours(timeSlotDto.durationInHours);
+//		lab.setStartHour(timeSlotDto.startHour);
+//		lab.setRoomId(timeSlotDto.roomId);
 		subject.getActivities().add(lab);
 		lab.setSubject(subject);
 		em.persist(lab);

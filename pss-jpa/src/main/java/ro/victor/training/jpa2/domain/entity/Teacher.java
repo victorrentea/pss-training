@@ -1,22 +1,22 @@
 package ro.victor.training.jpa2.domain.entity;
 
-import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.OrderBy;
 
 @Entity
 public class Teacher {
@@ -44,15 +44,14 @@ public class Teacher {
 	@ManyToMany(mappedBy = "teachers")
 	private Set<TeachingActivity> activities = new HashSet<>();
 	
-	private DayOfWeek counselingDay;
-	
-	private int counselingStartHour;
-	
-	private int counselingDurationInHours;
-	
-	private String counselingRoomId;
+	@Embedded
+	@AttributeOverrides({
+	     @AttributeOverride(name="startHour", column=@Column(name="COUNSELING_START_HOUR"))
+	})
+	private TimeSlot counselingTimeSlot;
 	
 	public Teacher() {
+		
 	}
 	
 	public Teacher(String name) {
@@ -99,36 +98,14 @@ public class Teacher {
 		this.activities = activities;
 	}
 
-	public DayOfWeek getCounselingDay() {
-		return counselingDay;
+	
+
+	public TimeSlot getCounselingTimeSlot() {
+		return counselingTimeSlot;
 	}
 
-	public void setCounselingDay(DayOfWeek counselingDay) {
-		this.counselingDay = counselingDay;
-	}
-
-	public int getCounselingStartHour() {
-		return counselingStartHour;
-	}
-
-	public void setCounselingStartHour(int counselingStartHour) {
-		this.counselingStartHour = counselingStartHour;
-	}
-
-	public int getCounselingDurationInHours() {
-		return counselingDurationInHours;
-	}
-
-	public void setCounselingDurationInHours(int counselingDurationInHours) {
-		this.counselingDurationInHours = counselingDurationInHours;
-	}
-
-	public String getCounselingRoomId() {
-		return counselingRoomId;
-	}
-
-	public void setCounselingRoomId(String counselingRoomId) {
-		this.counselingRoomId = counselingRoomId;
+	public void setCounselingTimeSlot(TimeSlot counselingTimeSlot) {
+		this.counselingTimeSlot = counselingTimeSlot;
 	}
 
 	public List<ContactChannel> getChannels() {
