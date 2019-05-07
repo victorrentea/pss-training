@@ -19,12 +19,17 @@ public class Playground {
 	@Transactional
 	public void firstTransaction() {
 		em.persist(new ErrorLog("Defect Driven Development"));
-		
+		em.persist(new ErrorLog("Eroarea 2"));
 		
 	}
 
+	@Transactional
 	public void secondTransaction() {
-		 // TODO
+		ErrorLog errorLog = em.find(ErrorLog.class, 1L);
+		System.out.println("mesaj: " + errorLog.getMessage());
+		errorLog.setMessage("Alt Mesaj");
+
+		em.remove(em.find(ErrorLog.class, 2L));
 	}
 
 }
