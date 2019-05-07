@@ -1,5 +1,7 @@
 package ro.victor.training.jpa2.domain.entity;
 
+import static java.util.Collections.unmodifiableSet;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -120,12 +122,21 @@ public class Teacher {
 	}
 
 	public Set<Subject> getHeldSubjects() {
-		return heldSubjects;
+		return unmodifiableSet(heldSubjects);
 	}
 
-	public void setHeldSubjects(Set<Subject> heldSubjects) {
-		this.heldSubjects = heldSubjects;
+	public void addSubject(Subject subject) {
+		heldSubjects.add(subject);
+		subject.setHolderTeacher(this);
+	}
+	public void removeSubject(Subject subject) {
+		 heldSubjects.remove(subject);
+		 subject.setHolderTeacher(null);
 	}
 	
+	public void setHeldSubjects(Set<Subject> heldSubjects) {
+		new HashSet<>(this.heldSubjects).forEach(this::removeSubject);
+		heldSubjects.forEach(this::addSubject);
+	}
 
 }

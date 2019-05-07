@@ -48,9 +48,10 @@ public class Playground {
 		
 		
 //		teacher.getHeldSubjects().add(oop); // doar asta nu merge
-		oop.setHolderTeacher(teacher); // doar asta MERGEE!! Dar lasa modelul din memorie inconsistent
+//		oop.setHolderTeacher(teacher); // doar asta MERGEE!! Dar lasa modelul din memorie inconsistent
 		//ambele ar trebui sa fie legate ATOMIC
 		
+		teacher.addSubject(oop); // legaturile bi-directionale sunt setate 'atomic'
 		
 		
 		em.persist(oop);
