@@ -79,7 +79,10 @@ public class Ziua2 {
 	public void third() {
 		 Subject subject = em.find(Subject.class, 1L);
 		 System.out.println("Activities: "  + subject.getActivities());
+//		 em.loc
+		 subject.getActivities().clear();
 	}
+	
 }
 
 @Component

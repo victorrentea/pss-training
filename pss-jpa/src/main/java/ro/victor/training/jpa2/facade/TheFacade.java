@@ -102,7 +102,6 @@ public class TheFacade {
 				timeSlotDto.durationInHours, 
 				timeSlotDto.roomId));
 		subject.getActivities().add(lab);
-		lab.setSubject(subject);
 		em.persist(lab);
 		return lab.getId();
 	}

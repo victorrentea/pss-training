@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -25,7 +26,7 @@ public class Subject {
 	@ManyToOne
 	private Teacher holderTeacher;
 	
-	@OneToMany
+	@OneToMany(orphanRemoval = true, cascade = CascadeType.ALL)
 	@JoinColumn(name="SUBJECT_ID") //stores this column in the child entity
 //	@JoinTable //makes a table //makes a new column
 	private List<TeachingActivity> activities = new ArrayList<>();
