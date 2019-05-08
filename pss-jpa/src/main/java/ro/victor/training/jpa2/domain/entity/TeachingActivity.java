@@ -25,7 +25,7 @@ public abstract class TeachingActivity {
 	private Subject subject;
 	
 	@Embedded
-	private TimeSlot timeSlot;
+	private TimeSlot timeSlot = new TimeSlot();
 	
 	private String lastModifiedBy;
  

@@ -6,10 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-
-import ro.victor.training.jpa2.common.data.EntityRepositoryFactoryBean;
 
 @SpringBootApplication
 //@EnableJpaRepositories(repositoryFactoryBeanClass = EntityRepositoryFactoryBean.class)
@@ -19,8 +16,10 @@ public class Jpa2Application {
 
 //	@Autowired
 //	private DummyDataCreator dummyDataCreator;
+//	@Autowired
+//	private Playground playground;
 	@Autowired
-	private Playground playground;
+	private Ziua2 playground;
 
 	@EventListener
 	public void onApplicationEvent(ContextRefreshedEvent event) {
@@ -34,10 +33,10 @@ public class Jpa2Application {
 		} catch (Throwable tot) {
 			//shaorma
 		}
-		System.out.println(" ========= THIRD TRANSACTION ========== ");
-		playground.third();
-		System.out.println(" ========= forth TRANSACTION ========== ");
-		playground.forth();
+//		System.out.println(" ========= THIRD TRANSACTION ========== ");
+//		playground.third();
+//		System.out.println(" ========= forth TRANSACTION ========== ");
+//		playground.forth();
 		System.out.println(" ========= END ========== ");
 	}
 	

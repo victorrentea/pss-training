@@ -21,6 +21,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
+import javax.persistence.OrderColumn;
 
 @Entity
 public class Teacher {
@@ -41,9 +43,11 @@ public class Teacher {
 	private TeacherDetails details;
 	
 	@ElementCollection
+//	@OrderColumn
+	@OrderBy("value ASC, type ASC")
 	private List<ContactChannel> channels = new ArrayList<>();
 
-	@OneToMany(mappedBy = "holderTeacher")
+	@OneToMany(mappedBy = "holderTeacher", cascade=CascadeType.PERSIST)
 	private Set<Subject> heldSubjects = new HashSet<>() ;
 	
 	@ManyToMany(mappedBy = "teachers")
