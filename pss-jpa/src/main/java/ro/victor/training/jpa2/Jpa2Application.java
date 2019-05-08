@@ -33,8 +33,8 @@ public class Jpa2Application {
 		} catch (Throwable tot) {
 			//shaorma
 		}
-//		System.out.println(" ========= THIRD TRANSACTION ========== ");
-//		playground.third();
+		System.out.println(" ========= THIRD TRANSACTION ========== ");
+		playground.third();
 //		System.out.println(" ========= forth TRANSACTION ========== ");
 //		playground.forth();
 		System.out.println(" ========= END ========== ");

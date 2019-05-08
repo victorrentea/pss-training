@@ -8,8 +8,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import ro.victor.training.jpa2.domain.entity.ContactChannel;
-import ro.victor.training.jpa2.domain.entity.LabActivity;
 import ro.victor.training.jpa2.domain.entity.ContactChannel.Type;
+import ro.victor.training.jpa2.domain.entity.CourseActivity;
+import ro.victor.training.jpa2.domain.entity.LabActivity;
 import ro.victor.training.jpa2.domain.entity.Subject;
 import ro.victor.training.jpa2.domain.entity.Teacher;
 import ro.victor.training.jpa2.domain.entity.TeachingActivity;
@@ -29,6 +30,11 @@ public class Ziua2 {
 		teacher.addSubject(subject);
 //		em.persist(subject);
 		em.persist(teacher);
+		
+		TeachingActivity activity = new CourseActivity();
+		subject.getActivities().add(activity);
+		em.persist(activity);
+		
 		
 		em.persist(new LabActivity());
 		
@@ -67,6 +73,12 @@ public class Ziua2 {
 		new RuntimeException().printStackTrace();
 		throw new RuntimeException("Intentionat.");
 		
+	}
+	
+	@Transactional(propagation = Propagation.REQUIRED) // DEFAULT!
+	public void third() {
+		 Subject subject = em.find(Subject.class, 1L);
+		 System.out.println("Activities: "  + subject.getActivities());
 	}
 }
 

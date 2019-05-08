@@ -21,9 +21,6 @@ public abstract class TeachingActivity {
 	@GeneratedValue
 	private Long id;
 	
-	@ManyToOne
-	private Subject subject;
-	
 	@Embedded
 	private TimeSlot timeSlot = new TimeSlot();
 	
@@ -42,14 +39,6 @@ public abstract class TeachingActivity {
 		this.id = id;
 	}
 
-	
-	public Subject getSubject() {
-		return subject;
-	}
-
-	public void setSubject(Subject subject) {
-		this.subject = subject;
-	}
 
 
 	public Set<Teacher> getTeachers() {

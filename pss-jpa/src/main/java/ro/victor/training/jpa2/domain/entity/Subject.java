@@ -7,6 +7,8 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -23,7 +25,9 @@ public class Subject {
 	@ManyToOne
 	private Teacher holderTeacher;
 	
-	@OneToMany(mappedBy = "subject")
+	@OneToMany
+	@JoinColumn(name="SUBJECT_ID") //stores this column in the child entity
+//	@JoinTable //makes a table //makes a new column
 	private List<TeachingActivity> activities = new ArrayList<>();
 	
 	private LocalDate lastModifiedDate;
