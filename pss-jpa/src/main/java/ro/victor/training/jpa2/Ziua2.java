@@ -4,6 +4,7 @@ import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import ro.victor.training.jpa2.domain.entity.ContactChannel;
@@ -38,6 +39,7 @@ public class Ziua2 {
 		System.out.println(teacher.getChannels());
 		System.out.println(teacher.getHeldSubjects());
 		
+		
 		TeachingActivity a = em.find(TeachingActivity.class, 1L);
 		System.out.println("A:"+a);
 		
@@ -45,8 +47,9 @@ public class Ziua2 {
 		teacher.setName("Nume adevarat");
 		em.flush();
 		try {
-			altaMetoda(); // NU MERGE
-			totEu.altaMetoda(); // MERGE
+//			altaMetoda(); // NU MERGE
+//			totEu.altaMetoda(); // MERGE
+			altaClasa.altaMetodaDinAltaClasaCareNuPreiaTx(); // MERGE
 //			altaClasa.altaMetodaDinAltaClasa(); // MERGe
 		} catch (Exception e) {
 			//shaorma
@@ -71,6 +74,12 @@ public class Ziua2 {
 class AltaClasa2 {
 	@Transactional
 	public void altaMetodaDinAltaClasa() {
+		new RuntimeException().printStackTrace();
+		throw new RuntimeException("Intentionat.");
+		
+	}
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public void altaMetodaDinAltaClasaCareNuPreiaTx() {
 		new RuntimeException().printStackTrace();
 		throw new RuntimeException("Intentionat.");
 		
