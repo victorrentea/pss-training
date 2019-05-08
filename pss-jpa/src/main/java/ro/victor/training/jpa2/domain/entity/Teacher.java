@@ -16,6 +16,7 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
@@ -39,7 +40,7 @@ public class Teacher {
 	
 	@Enumerated(EnumType.STRING)
 	private Grade grade;
-	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
 	private TeacherDetails details;
 	
 	@ElementCollection
@@ -63,6 +64,12 @@ public class Teacher {
 		
 	}
 	
+	
+	public String toString() {
+		return "Teacher [id=" + id + ", name=" + name + "]";
+	}
+
+
 	public Teacher(String name) {
 		this.name = name;
 	}

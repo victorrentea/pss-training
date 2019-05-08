@@ -6,10 +6,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import ro.victor.training.jpa2.common.data.EntityRepositoryFactoryBean;
+
 @SpringBootApplication
-//@EnableJpaRepositories(repositoryFactoryBeanClass = EntityRepositoryFactoryBean.class)
+@EnableJpaRepositories(repositoryFactoryBeanClass = EntityRepositoryFactoryBean.class)
 @EnableTransactionManagement
 @EnableJpaAuditing
 public class Jpa2Application {
@@ -42,10 +45,14 @@ public class Jpa2Application {
 		System.out.println(" ========= END ========== ");
 		
 		jpql.play();
+		
+		dataJpa.play();
 	}
 	
 	@Autowired
 	private Jpql jpql;
+	@Autowired
+	private SpringDataJpa dataJpa;
 	
 
 //	@Bean

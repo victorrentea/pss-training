@@ -13,6 +13,15 @@ public class TeacherDetails {
 	private Long id;
 	@Lob
 	private String cv;
+	
+	public TeacherDetails() {
+	}
+	
+
+	public TeacherDetails(String cv) {
+		this.cv = cv;
+	}
+
 
 	public Long getId() {
 		return id;
