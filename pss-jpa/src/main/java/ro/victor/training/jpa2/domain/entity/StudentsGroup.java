@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Version;
 
 @Entity
 public class StudentsGroup {
@@ -19,6 +20,9 @@ public class StudentsGroup {
 	private Long id;
 
 	private String code;
+	
+	@Version
+	private Long version;
 
 	@ManyToOne
 	private StudentsYear year;
@@ -42,6 +46,15 @@ public class StudentsGroup {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+
+	public Long getVersion() {
+		return version;
+	}
+
+	public void setVersion(Long version) {
+		this.version = version;
 	}
 
 	public String getCode() {
