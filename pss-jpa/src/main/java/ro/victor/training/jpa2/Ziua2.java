@@ -33,7 +33,7 @@ public class Ziua2 {
 		
 	}
 	@Transactional//(rollbackFor= {ExceptiaMeaEnervantaPeCareTotiiDeviiOStiuPeDeRost.class})
-	public void secondTransaction() {
+	public void secondTransaction() throws Exception {
 		Teacher teacher = em.find(Teacher.class, 1L);
 		System.out.println(teacher.getChannels());
 		System.out.println(teacher.getHeldSubjects());
@@ -43,7 +43,36 @@ public class Ziua2 {
 		
 		
 		teacher.setName("Nume adevarat");
+		em.flush();
+		try {
+			altaMetoda(); // NU MERGE
+			totEu.altaMetoda(); // MERGE
+//			altaClasa.altaMetodaDinAltaClasa(); // MERGe
+		} catch (Exception e) {
+			//shaorma
+		}
 		
+	}
+	@Autowired
+	private Ziua2 totEu;
+	
+	@Autowired
+	private AltaClasa2 altaClasa;
+	
+	@Transactional
+	public void altaMetoda() {
+		new RuntimeException().printStackTrace();
+		throw new RuntimeException("Intentionat.");
+		
+	}
+}
+
+@Component
+class AltaClasa2 {
+	@Transactional
+	public void altaMetodaDinAltaClasa() {
+		new RuntimeException().printStackTrace();
+		throw new RuntimeException("Intentionat.");
 		
 	}
 }
