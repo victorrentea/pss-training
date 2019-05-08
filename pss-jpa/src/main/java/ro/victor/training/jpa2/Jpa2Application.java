@@ -18,8 +18,10 @@ public class Jpa2Application {
 //	private DummyDataCreator dummyDataCreator;
 //	@Autowired
 //	private Playground playground;
+//	@Autowired
+//	private Ziua2 playground;
 	@Autowired
-	private Ziua2 playground;
+	private OptimisticPlay playground;
 
 	@EventListener
 	public void onApplicationEvent(ContextRefreshedEvent event) {
@@ -38,7 +40,12 @@ public class Jpa2Application {
 //		System.out.println(" ========= forth TRANSACTION ========== ");
 //		playground.forth();
 		System.out.println(" ========= END ========== ");
+		
+		jpql.play();
 	}
+	
+	@Autowired
+	private Jpql jpql;
 	
 
 //	@Bean

@@ -39,7 +39,6 @@ public class Ziua2 {
 		
 		em.persist(new LabActivity());
 		
-		em.persist(new StudentsGroup("CA321"));
 		
 	}
 	@Transactional//(rollbackFor= {ExceptiaMeaEnervantaPeCareTotiiDeviiOStiuPeDeRost.class})
@@ -51,15 +50,7 @@ public class Ziua2 {
 		
 		TeachingActivity a = em.find(TeachingActivity.class, 1L);
 		System.out.println("A:"+a);
-		
-		StudentsYear year = new StudentsYear();
-		em.persist(year);
-		 StudentsGroup group = new StudentsGroup();
-		 group.setCode("CA321");
-		 group.setId(1l);
-		group.setYear(year);
-		 em.merge(group);
-		
+	
 		
 		teacher.setName("Nume adevarat");
 		em.flush();
@@ -92,13 +83,11 @@ public class Ziua2 {
 		 System.out.println("Activities: "  + subject.getActivities());
 //		 em.loc
 		 subject.getActivities().clear();
+
 		 
-		 // Merge + Locking
-		 // convertesti dintr-o structura de date a UI-ului in urmatoarea instanta de entitate:
-		 StudentsGroup group = new StudentsGroup();
-		 group.setCode("421CA");
-		 group.setId(1l);
-		 em.merge(group);
+	
+		 
+		
 	}
 	
 }
