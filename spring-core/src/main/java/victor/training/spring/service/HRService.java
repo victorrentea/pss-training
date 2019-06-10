@@ -14,6 +14,8 @@ import victor.training.spring.dao.InterviewDao;
 import victor.training.spring.model.Employee;
 import victor.training.spring.model.InterviewQuestion;
 
+import javax.annotation.PostConstruct;
+
 public class HRService {
 	@Autowired // SOLUTION
 	private EmployeeDao employeeDao;
@@ -23,6 +25,7 @@ public class HRService {
 	private CurrencyConverter currencyConverter;
 	private MyWSClient webServiceClient;
 	private String myProperty;
+
 
 	public Employee getEmployeeById(String employeeId) {
 		return employeeDao.getById(employeeId);

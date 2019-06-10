@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.*;
 
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Component;
 import victor.training.spring.service.CurrencyConverterHandshakeImpl;
@@ -23,6 +24,13 @@ import java.util.Arrays;
 public class ConfigSolution {
 
     @Bean
+    public ResourceBundleMessageSource messageSource() {
+        ResourceBundleMessageSource source = new ResourceBundleMessageSource();
+        source.setBasename("messages");
+        return source;
+    }
+
+    @Bean
     @Lazy
     public CurrencyConverterHandshakeImpl handshakeConverter() {
         System.out.println("Once!");
@@ -33,12 +41,14 @@ public class ConfigSolution {
 
 
     @Bean
-    public HRService hrService(@Value("${myString}") String myString) {
-//    public HRService hrService(@Value("${myString}") String myString, MyWSClient myWSClient) {
+    public HRService hrService(@Value("${myProperty}") String myProperty) {
+
+        System.out.println("myProperty="+myProperty);
+//    public HRService hrService(@Value("${myProperty}") String myProperty, MyWSClient myWSClient) {
         HRService service = new HRService();
 //        service.setWebServiceClient(myWSClient);
         service.setWebServiceClient(myWSClient());
-        service.setMyProperty(myString);
+        service.setMyProperty(myProperty);
         return service;
     }
 

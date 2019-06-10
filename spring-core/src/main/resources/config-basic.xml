@@ -11,7 +11,7 @@
 
 
 
-
+	<context:property-placeholder  location="classpath:config-basic.properties"/>
 	<bean id="myAspectBean" class="victor.training.spring.advanced.MyAspect" />
 	<aop:aspectj-autoproxy>
 		<aop:include name="myAspectBean" />
