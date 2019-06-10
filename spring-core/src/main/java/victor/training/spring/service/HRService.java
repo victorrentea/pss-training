@@ -14,8 +14,6 @@ import victor.training.spring.dao.InterviewDao;
 import victor.training.spring.model.Employee;
 import victor.training.spring.model.InterviewQuestion;
 
-import javax.annotation.PostConstruct;
-
 public class HRService {
 	@Autowired // SOLUTION
 	private EmployeeDao employeeDao;
@@ -43,8 +41,8 @@ public class HRService {
 		employeeDao.removeById(employeeId);
 	}
 	
-	public void callMyService(Date date) {
-		webServiceClient.callWebService(new SimpleDateFormat("yyyy-MM-dd").format(date));
+	public int callMyService(Date date) {
+		return webServiceClient.callWebService(new SimpleDateFormat("yyyy-MM-dd").format(date));
 	}
 
 	public void switchPhones(String employee1Id, String employee2Id) {

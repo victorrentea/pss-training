@@ -29,10 +29,10 @@ public class MockitoDoesItTheSameAsSpring {
 @Service
 @RequiredArgsConstructor
 class BigBallOfCode {
-//    @Autowired
-//    private OtherDependency dep;
+    @Autowired
+    private OtherDependency dep;
 
-    private final OtherDependency dep;
+//    private final OtherDependency dep;
 //    private BigBallOfCode(OtherDependency dep) {
 ////        this.dep = dep;
 ////    }
