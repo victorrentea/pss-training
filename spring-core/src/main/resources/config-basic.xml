@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+              http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+              http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+              http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+              http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+	
+	<bean id="employeeDao" class="victor.training.spring.dao.EmployeeDaoImpl">
+	</bean>
+	
+	<!-- 
+	<bean id="interviewDao" ...>
+	</bean> 
+	-->
+
+	<!-- 
+	<bean id="wsClient" class="victor.training.spring.service.MyWSClient" factory-...>
+	</bean> 
+	-->
+	<!-- endpointURLs http://ro.ibm.com/myws http://localhost:8080/myws -->
+
+	<bean id="hrService" class="victor.training.spring.service.HRService">
+		<!-- 
+		<property name="employeeDao" ref="" /> 
+		<property name="interviewDao">
+		    <ref bean="" />
+		</property> 
+		
+		<property name="webServiceClient" ref="wsClient">	</property>
+		<property name="currencyConverter" ref="" /> 
+		<property name="myProperty" /> 
+		-->
+	</bean>
+
+	<bean id="handshakeConverter" lazy-init="true" class="victor.training.spring.service.CurrencyConverterHandshakeImpl" />
+	    <!-- init-method="" --> 
+	<bean id="statlessConverter" class="victor.training.spring.service.CurrencyConverterStatelessImpl" />
+
+
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="org.hsqldb.jdbcDriver" /> 
+		<property name="url" value="jdbc:hsqldb:file:hr-database" /> 
+		<property name="username" value="SA" />
+		<property name="password" value="" />
+	</bean>
+
+
+	<!-- @Component -->
+	<!-- <context:component-...  -->
+
+
+	<!-- ***** ADVANCED ****** -->
+	<!-- <bean id="myAspectBean" class="...
+	<aop:aspectj-autoproxy>
+		<aop:include name="myAspectBean" />
+	</aop:aspectj-autoproxy>
+ 	-->
+ 	
+	<!-- <bean class="victor.training.spring.advanced.MyBeanPostProcessor" /> -->
+
+	<!-- <bean id="myString" class="victor.training.spring.advanced.MyStringFactoryBean">
+		<property name="file" value="test.txt" />
+	</bean> -->
+	
+	<beans profile="handshake">
+		<!-- <bean class="" /> -->
+	</beans>
+</beans>

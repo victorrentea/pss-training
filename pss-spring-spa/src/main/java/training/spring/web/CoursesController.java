@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 import training.spring.OrderPlacer;
 import training.spring.domain.Course;
 import training.spring.repo.CourseRepository;
@@ -44,6 +46,17 @@ public class CoursesController {
 //	public List<CourseDto> getCourses() {
 //		return courseRepo.findAll().stream().map(CourseDto::new).collect(toList());
 //	}
+
+	@GetMapping(value = "hello", params = "p1")
+	public String p1(){
+		return "p1";
+	}
+	@GetMapping(value = "hello", params = "!p1")
+	public String p2(UriComponentsBuilder uriBuilder){
+		UriComponents more = uriBuilder.fragment("aa").path("more").build();
+		;
+		return "p2" + more.toUriString();
+	}
 	
 	//localhost:8089/rest/courses?name=Spring&teacherId=1
 	@GetMapping

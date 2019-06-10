@@ -16,7 +16,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class PssSpringSpaApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(PssSpringSpaApplication.class, args);
+		SpringApplicaton.run(PssSpringSpaApplication.class, args);
 	}
 
 }
