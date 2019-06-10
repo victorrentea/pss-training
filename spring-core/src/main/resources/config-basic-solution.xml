@@ -24,6 +24,8 @@
 		<property name="myProperty" value="#{myString}" />
 	</bean>
 
+
+
 	<bean id="handshakeConverter" lazy-init="true"
 		class="victor.training.spring.service.CurrencyConverterHandshakeImpl" />
 	<!-- init-method="" -->

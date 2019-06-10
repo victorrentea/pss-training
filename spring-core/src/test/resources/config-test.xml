@@ -8,8 +8,8 @@
 							http://www.springframework.org/schema/context/spring-context.xsd">
 
 
-	<import resource="classpath:config-basic.xml"/>
-
+	<!--<import resource="classpath:config-basic.xml"/>-->
+	<bean class="victor.training.spring.ConfigSolution" />
 	<!-- <bean id="wsClientMock" class="org.mockito.Mockito" factory-method="mock">
 		<constructor-arg value="victor.training.spring.service.MyWSClient" />
 	</bean>

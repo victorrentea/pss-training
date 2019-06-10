@@ -9,41 +9,8 @@
               http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
               http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
-	<bean id="hrService" class="victor.training.spring.service.HRService">
-		<property name="webServiceClient">
-			<bean class="victor.training.spring.service.MyWSClient"
-				  factory-method="getInstance">
-				<property name="endpointURLs">
-					<list>
-						<value>http://ro.ibm.com/myws</value>
-						<value>http://localhost:8080/myws</value>
-					</list>
-				</property>
-			</bean>
-		</property>
-		<property name="myProperty" value="#{myString}" />
-	</bean>
-
-	<bean id="handshakeConverter" lazy-init="true"
-		  class="victor.training.spring.service.CurrencyConverterHandshakeImpl" />
-	<!-- init-method="" -->
-	<bean id="statlessConverter"
-		  class="victor.training.spring.service.CurrencyConverterStatelessImpl" />
 
 
-	<bean id="dataSource"
-		  class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName" value="org.hsqldb.jdbcDriver" />
-		<property name="url" value="jdbc:hsqldb:file:hr-database" />
-		<property name="username" value="SA" />
-		<property name="password" value="" />
-	</bean>
-
-	<!-- @Autowired -->
-	<context:annotation-config />
-
-	<!-- @Component -->
-	<context:component-scan base-package="victor.training.spring" />
 
 	<bean id="myAspectBean" class="victor.training.spring.advanced.MyAspect" />
 	<aop:aspectj-autoproxy>
@@ -52,9 +19,6 @@
 
 	<bean class="victor.training.spring.advanced.MyBeanPostProcessor" />
 
-	<bean id="myString" class="victor.training.spring.advanced.MyStringFactoryBean">
-		<property name="file" value="test.txt" />
-	</bean>
 
 
 

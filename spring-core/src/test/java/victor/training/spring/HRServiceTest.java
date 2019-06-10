@@ -14,8 +14,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import victor.training.spring.model.Employee;
 import victor.training.spring.service.HRService;
 
-@ContextConfiguration(locations = { "classpath:/config-test.xml" })
-//@ContextConfiguration(classes = ConfigSolution.class)
+//@ContextConfiguration(locations = { "classpath:/config-test.xml" })
+@ContextConfiguration(classes = ConfigSolution.class)
 @RunWith(SpringJUnit4ClassRunner.class)
 public class HRServiceTest {
 
