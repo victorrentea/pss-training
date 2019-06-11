@@ -16,6 +16,7 @@ public class MockitoDoesItTheSameAsSpring {
     @InjectMocks
    private BigBallOfCode code;
 
+
    @Mock
    private OtherDependency dep;
     @Test
