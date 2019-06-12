@@ -13,22 +13,17 @@ public class ToParallelOrNotToParallel {
     public static void main(String[] args) {
 
         List<Integer> list = Arrays.asList(1,2,3,4,5,6,7,8,9,10);
-        Integer nn = list.parallelStream()
-                .filter(n -> {
-                    ConcurrencyUtil.log("Filtering " + n);
-                    return n % 2 == 1;
-                })
-                .map(n -> {
-                    ConcurrencyUtil.log("Squaring " + n);
-                    return n * n;
-                })
-                .filter(n -> ("" + n).contains("1"))
-                .findAny()
-                .get();
-        System.out.println(nn);
-//                .forEachOrdered(x -> {
-//                    ConcurrencyUtil.log(x+"");
-//                });
+        list.parallelStream()
+            .filter(n -> {
+                ConcurrencyUtil.log("Filtering " + n);
+                return n % 2 == 1;
+            })
+            .distinct()
+            .map(n -> {
+                ConcurrencyUtil.log("Squaring " + n);
+                return n * n;
+            })
+            .forEach(x -> ConcurrencyUtil.log(x+""));
 
 
     }
