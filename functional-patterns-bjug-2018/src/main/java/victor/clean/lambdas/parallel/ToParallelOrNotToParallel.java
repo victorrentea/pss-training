@@ -18,9 +18,9 @@ public class ToParallelOrNotToParallel {
                 ConcurrencyUtil.log("Filtering " + n);
                 return n % 2 == 1;
             })
-            .distinct()
             .map(n -> {
                 ConcurrencyUtil.log("Squaring " + n);
+                ConcurrencyUtil.sleep2(1000); // FAKE an IO
                 return n * n;
             })
             .forEach(x -> ConcurrencyUtil.log(x+""));
