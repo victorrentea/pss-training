@@ -11,15 +11,20 @@ public class ToParallelOrNotToParallel {
     public static void main(String[] args) {
 
         List<Integer> list = Arrays.asList(1,2,3,4,5,6,7,8,9,10);
-        list.parallelStream()
+        list.stream()
+                .parallel()
                 .filter(n -> {
                     ConcurrencyUtil.log("Filtering " + n);
                     return n % 2 == 1;
                 })
+                .collect(Collectors.toList()).stream()
+                .sequential()
                 .map(n -> {
                     ConcurrencyUtil.log("Squaring " + n);
                     return n * n;
                 })
+                .collect(Collectors.toList()).stream()
+                .parallel()
                 .forEach(x -> {
                     ConcurrencyUtil.log(x+"");
                 });
