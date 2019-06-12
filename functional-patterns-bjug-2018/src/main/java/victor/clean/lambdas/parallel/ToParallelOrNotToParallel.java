@@ -3,8 +3,10 @@ package victor.clean.lambdas.parallel;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Spliterator;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 public class ToParallelOrNotToParallel {
 
@@ -25,15 +27,11 @@ public class ToParallelOrNotToParallel {
                 })
                 .collect(Collectors.toList()).stream()
                 .parallel()
-                .forEach(x -> {
+                .forEachOrdered(x -> {
                     ConcurrencyUtil.log(x+"");
                 });
 
 
-
-
-
-//        fib();
     }
 
     private static void fib() {
