@@ -16,16 +16,26 @@ public class Semaphore1 {
 		public BoundedHashSet(int bound) {
 			set = Collections.synchronizedSet(new HashSet<T>());
 			// TODO create Semaphore with given number of permits
+			sem = new Semaphore(bound);
 		}
-		
+
+		// JDD
 		public boolean add(T o) throws InterruptedException {
 			// TODO acquire permit from semaphore; if the add failed, release the semaphore back
-			 return set.add(o); 
+			if (!set.contains(o)) {
+				sem.acquire();
+				return set.add(o);
+			} else {
+				return false;
+			}
 		}
 		
 		public boolean remove(T o) {
 			boolean wasRemoved = set.remove(o);
 			// TODO if indeed removed an item, release a virtual permit back to the semaphore
+			if (wasRemoved) {
+				sem.release();
+			}
 			return wasRemoved;
 		}
 	}
@@ -35,6 +45,9 @@ public class Semaphore1 {
 		
 		new Thread("Inserter") {
 			public void run() {
+				addElement("a");
+				addElement("a");
+				addElement("a");
 				addElement("a");
 				addElement("b");
 				addElement("c");
@@ -56,6 +69,9 @@ public class Semaphore1 {
 		new Thread("Remover") {
 			public void run() {
 				sleep2(200);
+				remove("a");
+				remove("a");
+				remove("a");
 				remove("a");
 				remove("b");
 				remove("c");
